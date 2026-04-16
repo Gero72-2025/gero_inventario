@@ -1,0 +1,9 @@
+# Ignore all files in the writable directory
+/writable/*
+# Ignore all files in the writable directory except .gitkeep
+!.gitkeep
+# Ignore vendor directory
+/vendor/
+# Ignore environment variable files
+.env.test
+.env
