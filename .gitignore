@@ -1,5 +1,7 @@
 # Ignore all files in the writable directory
-/writable/*
+/writable/debugbar/*.json
+/writable/logs/*.log
+/writable/session/*
 # Ignore all files in the writable directory except .gitkeep
 !.gitkeep
 # Ignore vendor directory
