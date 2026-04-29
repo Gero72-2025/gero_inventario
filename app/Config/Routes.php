@@ -41,3 +41,12 @@ $routes->post('permisos/sincronizar', 'Permisos::sincronizar');
 $routes->post('permisos/eliminar/(:num)', 'Permisos::delete/$1');
 $routes->get('permisos/roles', 'Permisos::gestionarPorRol');
 $routes->post('permisos/roles/guardar', 'Permisos::guardarPermisosPorRol');
+
+$routes->get('bodegas', 'Bodegas::index');
+$routes->get('bodegas/nuevo', 'Bodegas::create');
+$routes->post('bodegas', 'Bodegas::store');
+$routes->get('bodegas/ver/(:num)', 'Bodegas::ver/$1');
+$routes->get('bodegas/editar/(:num)', 'Bodegas::editar/$1');
+$routes->post('bodegas/actualizar/(:num)', 'Bodegas::actualizar/$1');
+$routes->post('bodegas/eliminar/(:num)', 'Bodegas::delete/$1');
+$routes->get('bodegas/getById/(:num)', 'Bodegas::getById/$1');

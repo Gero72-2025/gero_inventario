@@ -77,6 +77,7 @@ window.GeroModal = (function () {
             confirmLabel: 'Confirmar',
             cancelLabel: 'Cancelar',
             showCancel: true,
+            showConfirm: true,
             onConfirm: null,
         }, opts);
 
@@ -104,11 +105,16 @@ window.GeroModal = (function () {
         titleEl.innerHTML = '<i class="bi ' + cfg.icon + ' me-2"></i>' + _esc(options.title);
 
         // Body
-        bodyEl.textContent = options.message;
+        if (options.html) {
+            bodyEl.innerHTML = options.html;
+        } else {
+            bodyEl.textContent = options.message;
+        }
 
         // Confirm button
         confirmBtn.className = 'btn ' + cfg.btnClass;
         confirmBtn.textContent = options.confirmLabel;
+        confirmBtn.style.display = options.showConfirm === false ? 'none' : '';
 
         // Cancel button visibility
         const cancelBtn = footerEl ? footerEl.querySelector('[data-bs-dismiss="modal"]') : null;

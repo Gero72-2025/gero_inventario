@@ -50,6 +50,7 @@ if ($isLoggedIn) {
                 'Configuraciones' => 'bi-gear-fill',
                 'Roles' => 'bi-person-badge-fill',
                 'Permisos' => 'bi-shield-lock-fill',
+                'Bodegas' => 'bi-house-door-fill',
             ];
 
             foreach ($accionesPorControlador as $controlador => $acciones) {
