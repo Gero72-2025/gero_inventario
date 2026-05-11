@@ -36,6 +36,13 @@ $routes->get('roles/editar/(:num)', 'Roles::edit/$1');
 $routes->post('roles/actualizar/(:num)', 'Roles::update/$1');
 $routes->post('roles/eliminar/(:num)', 'Roles::delete/$1');
 
+$routes->get('etapas', 'Etapas::index');
+$routes->get('etapas/nuevo', 'Etapas::create');
+$routes->post('etapas/guardar', 'Etapas::store');
+$routes->get('etapas/editar/(:num)', 'Etapas::edit/$1');
+$routes->post('etapas/actualizar/(:num)', 'Etapas::update/$1');
+$routes->post('etapas/eliminar/(:num)', 'Etapas::delete/$1');
+
 $routes->get('permisos', 'Permisos::index');
 $routes->post('permisos/sincronizar', 'Permisos::sincronizar');
 $routes->post('permisos/eliminar/(:num)', 'Permisos::delete/$1');
