@@ -274,6 +274,11 @@ class Bodegas extends Controller
             $deleted = $this->bodegaModel->update($id, $data);
 
             if ($deleted === false) {
+                if ($this->request->isAJAX()) {
+                    return $this->response
+                        ->setStatusCode(400)
+                        ->setJSON(['success' => false, 'message' => 'Error al eliminar la bodega.']);
+                }
                 $this->session->setFlashdata('error', 'Error al eliminar la bodega.');
                 return redirect()->back();
             }
@@ -287,9 +292,13 @@ class Bodegas extends Controller
             $this->session->setFlashdata('success', 'Bodega eliminada exitosamente.');
             return redirect()->to('bodegas');
         } catch (\Exception $e) {
-            return $this->response
-                ->setStatusCode(400)
-                ->setJSON(['success' => false, 'message' => $e->getMessage()]);
+            if ($this->request->isAJAX()) {
+                return $this->response
+                    ->setStatusCode(400)
+                    ->setJSON(['success' => false, 'message' => $e->getMessage()]);
+            }
+            $this->session->setFlashdata('error', $e->getMessage());
+            return redirect()->back();
         }
     }
 
