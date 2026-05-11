@@ -41,3 +41,12 @@ $routes->post('permisos/sincronizar', 'Permisos::sincronizar');
 $routes->post('permisos/eliminar/(:num)', 'Permisos::delete/$1');
 $routes->get('permisos/roles', 'Permisos::gestionarPorRol');
 $routes->post('permisos/roles/guardar', 'Permisos::guardarPermisosPorRol');
+
+$routes->get('renglones', 'Renglones::index');
+$routes->get('renglones/nuevo', 'Renglones::create');
+$routes->post('renglones', 'Renglones::store');
+$routes->get('renglones/ver/(:num)', 'Renglones::ver/$1');
+$routes->get('renglones/editar/(:num)', 'Renglones::editar/$1');
+$routes->post('renglones/actualizar/(:num)', 'Renglones::actualizar/$1');
+$routes->post('renglones/eliminar/(:num)', 'Renglones::delete/$1');
+$routes->get('renglones/getById/(:num)', 'Renglones::getById/$1');
