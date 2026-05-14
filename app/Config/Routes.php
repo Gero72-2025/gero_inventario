@@ -48,3 +48,10 @@ $routes->post('permisos/sincronizar', 'Permisos::sincronizar');
 $routes->post('permisos/eliminar/(:num)', 'Permisos::delete/$1');
 $routes->get('permisos/roles', 'Permisos::gestionarPorRol');
 $routes->post('permisos/roles/guardar', 'Permisos::guardarPermisosPorRol');
+
+$routes->get('divisiones', 'Divisiones::index');
+$routes->get('divisiones/nuevo', 'Divisiones::create');
+$routes->post('divisiones/guardar', 'Divisiones::store');
+$routes->get('divisiones/editar/(:num)', 'Divisiones::edit/$1');
+$routes->post('divisiones/actualizar/(:num)', 'Divisiones::update/$1');
+$routes->post('divisiones/eliminar/(:num)', 'Divisiones::delete/$1');

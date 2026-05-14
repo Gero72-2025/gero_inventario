@@ -3,8 +3,8 @@
 <?= $this->section('content') ?>
 <div class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h1 class="h3 mb-0">Usuarios</h1>
-        <a href="<?= base_url('usuarios/nuevo') ?>" class="btn btn-primary">Nuevo usuario</a>
+        <h1 class="h3 mb-0">Divisiones</h1>
+        <a href="<?= base_url('divisiones/nuevo') ?>" class="btn btn-primary">Nueva división</a>
     </div>
 
     <?php if (session()->getFlashdata('success')): ?>
@@ -17,15 +17,15 @@
 
     <div class="card border-0 shadow-sm mb-3">
         <div class="card-body">
-            <form method="get" action="<?= base_url('usuarios') ?>" class="row g-2 align-items-center">
+            <form method="get" action="<?= base_url('divisiones') ?>" class="row g-2 align-items-center">
                 <div class="col-md-8">
-                    <input type="text" name="q" class="form-control" placeholder="Filtrar por alias o email" value="<?= esc($searchTerm ?? '') ?>">
+                    <input type="text" name="q" class="form-control" placeholder="Filtrar por nombre de división" value="<?= esc($searchTerm ?? '') ?>">
                 </div>
                 <div class="col-md-auto">
                     <button type="submit" class="btn btn-outline-primary">Filtrar</button>
                 </div>
                 <div class="col-md-auto">
-                    <a href="<?= base_url('usuarios') ?>" class="btn btn-outline-secondary">Limpiar</a>
+                    <a href="<?= base_url('divisiones') ?>" class="btn btn-outline-secondary">Limpiar</a>
                 </div>
             </form>
         </div>
@@ -37,38 +37,41 @@
                 <thead class="table-light">
                 <tr>
                     <th>ID</th>
-                    <th>Alias</th>
-                    <th>Email</th>
-                    <th>Tipo de rol</th>
-                    <th>Conectado</th>
+                    <th>Nombre de división</th>
+                    <th>Estado</th>
+                    <th>Actualizado</th>
                     <th class="text-end">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php if (empty($usuarios)): ?>
+                <?php if (empty($divisiones)): ?>
                     <tr>
-                        <td colspan="6" class="text-center py-4">No hay usuarios registrados.</td>
+                        <td colspan="5" class="text-center py-4">No hay divisiones registradas.</td>
                     </tr>
                 <?php else: ?>
-                    <?php foreach ($usuarios as $usuario): ?>
+                    <?php foreach ($divisiones as $division): ?>
                         <tr>
-                            <td><?= esc($usuario['id']) ?></td>
-                            <td><?= esc($usuario['alias']) ?></td>
-                            <td><?= esc($usuario['email']) ?></td>
-                            <td><?= esc($usuario['tipo_rol'] ?? 'Sin rol') ?></td>
+                            <td><?= esc($division['id']) ?></td>
+                            <td><?= esc($division['nombre_division']) ?></td>
                             <td>
-                                <?php if ((int) ($usuario['esta_conectado'] ?? 0) === 1): ?>
-                                    <span class="badge text-bg-success">Si</span>
+                                <?php if ($division['status'] === 'activo'): ?>
+                                    <span class="badge bg-success">Activo</span>
                                 <?php else: ?>
-                                    <span class="badge text-bg-secondary">No</span>
+                                    <span class="badge bg-secondary">Inactivo</span>
                                 <?php endif; ?>
                             </td>
+                            <td><?= esc($division['updated_at'] ?? '') ?></td>
                             <td class="text-end">
-                                <a href="<?= base_url('usuarios/editar/' . $usuario['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
-                                <form action="<?= base_url('usuarios/eliminar/' . $usuario['id']) ?>" method="post" class="d-inline">
+                                <a href="<?= base_url('divisiones/editar/' . $division['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                <form action="<?= base_url('divisiones/eliminar/' . $division['id']) ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
-                                    <input type="hidden" name="id_usuario" value="<?= esc(session('user_id') ?? '') ?>">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Deseas eliminar este usuario?')">Eliminar</button>
+                                    <button type="submit"
+                                            class="btn btn-sm btn-outline-danger"
+                                            data-gero-confirm
+                                            data-title="Eliminar división"
+                                            data-message="¿Deseas eliminar la división '<?= esc($division['nombre_division']) ?>'?"
+                                            data-type="danger"
+                                            data-confirm-label="Eliminar">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -79,7 +82,7 @@
         </div>
     </div>
 
-    <?php
+   <?php
     $pagerDetails = $pager->getDetails();
     $totalPages = (int) ($pagerDetails['pageCount'] ?? 1);
     $currentPage = (int) ($pagerDetails['currentPage'] ?? 1);
@@ -87,7 +90,7 @@
     ?>
     <div class="mt-3 text-center">
         <small class="text-muted d-block mb-2">Pagina <?= esc((string) $currentPage) ?> de <?= esc((string) $totalPages) ?></small>
-        <nav aria-label="Paginacion usuarios" class="d-inline-block">
+        <nav aria-label="Paginacion etapas" class="d-inline-block">
             <ul class="pagination mb-0">
                 <li class="page-item <?= ($canNavigate && ! empty($pagerDetails['hasPrevious'])) ? '' : 'disabled' ?>">
                     <a class="page-link" href="<?= ($canNavigate && ! empty($pagerDetails['hasPrevious'])) ? esc((string) ($pagerDetails['previous'] ?? '#')) : '#' ?>">Anterior</a>
