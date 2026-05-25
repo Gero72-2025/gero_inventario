@@ -66,3 +66,10 @@ $routes->get('renglones/editar/(:num)', 'Renglones::editar/$1');
 $routes->post('renglones/actualizar/(:num)', 'Renglones::actualizar/$1');
 $routes->post('renglones/eliminar/(:num)', 'Renglones::delete/$1');
 $routes->get('renglones/getById/(:num)', 'Renglones::getById/$1');
+
+$routes->get('divisiones', 'Divisiones::index');
+$routes->get('divisiones/nuevo', 'Divisiones::create');
+$routes->post('divisiones/guardar', 'Divisiones::store');
+$routes->get('divisiones/editar/(:num)', 'Divisiones::edit/$1');
+$routes->post('divisiones/actualizar/(:num)', 'Divisiones::update/$1');
+$routes->post('divisiones/eliminar/(:num)', 'Divisiones::delete/$1');
