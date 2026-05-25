@@ -88,3 +88,10 @@ $routes->post('ejerciciosfiscales/guardar', 'EjerciciosFiscales::store');
 $routes->get('ejerciciosfiscales/editar/(:num)', 'EjerciciosFiscales::edit/$1');
 $routes->post('ejerciciosfiscales/actualizar/(:num)', 'EjerciciosFiscales::update/$1');
 $routes->post('ejerciciosfiscales/eliminar/(:num)', 'EjerciciosFiscales::delete/$1');
+
+$routes->get('proveedores', 'Proveedores::index');
+$routes->get('proveedores/nuevo', 'Proveedores::create');
+$routes->post('proveedores/guardar', 'Proveedores::store');
+$routes->get('proveedores/editar/(:num)', 'Proveedores::edit/$1');
+$routes->post('proveedores/actualizar/(:num)', 'Proveedores::update/$1');
+$routes->post('proveedores/eliminar/(:num)', 'Proveedores::delete/$1');
