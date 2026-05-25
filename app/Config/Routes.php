@@ -73,3 +73,18 @@ $routes->post('divisiones/guardar', 'Divisiones::store');
 $routes->get('divisiones/editar/(:num)', 'Divisiones::edit/$1');
 $routes->post('divisiones/actualizar/(:num)', 'Divisiones::update/$1');
 $routes->post('divisiones/eliminar/(:num)', 'Divisiones::delete/$1');
+
+$routes->get('ejercicios-fiscales', 'EjerciciosFiscales::index');
+$routes->get('ejercicios-fiscales/nuevo', 'EjerciciosFiscales::create');
+$routes->post('ejercicios-fiscales/guardar', 'EjerciciosFiscales::store');
+$routes->get('ejercicios-fiscales/editar/(:num)', 'EjerciciosFiscales::edit/$1');
+$routes->post('ejercicios-fiscales/actualizar/(:num)', 'EjerciciosFiscales::update/$1');
+$routes->post('ejercicios-fiscales/eliminar/(:num)', 'EjerciciosFiscales::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('ejerciciosfiscales', 'EjerciciosFiscales::index');
+$routes->get('ejerciciosfiscales/nuevo', 'EjerciciosFiscales::create');
+$routes->post('ejerciciosfiscales/guardar', 'EjerciciosFiscales::store');
+$routes->get('ejerciciosfiscales/editar/(:num)', 'EjerciciosFiscales::edit/$1');
+$routes->post('ejerciciosfiscales/actualizar/(:num)', 'EjerciciosFiscales::update/$1');
+$routes->post('ejerciciosfiscales/eliminar/(:num)', 'EjerciciosFiscales::delete/$1');
