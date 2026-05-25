@@ -100,3 +100,116 @@ GeroModal.show({
 ## 10. Trazabilidad y Bitácoras
 - **Acciones Críticas:** Todo cambio en `presupuestos_renglon`, `facturas_liquidacion` y `asignaciones_responsabilidad` debe generar obligatoriamente un registro en `bitacora_cambios_datos`.
 - **Formato de Datos:** Los cambios se almacenarán en formato JSON capturando el estado previo y posterior del registro para fines de auditoría de la Contraloría.
+
+## 11. Patrones Críticos de CodeIgniter 4 (PROHIBIDO Violar estos patrones)
+
+### 11.1 Query Builder en Modelos - USO CORRECTO
+- **✅ CORRECTO:** Usar `$this->select()`, `$this->where()`, `$this->paginate()` dentro del Modelo que hereda de `CodeIgniter\Model`
+- **❌ INCORRECTO:** Usar `$this->db->table()` cuando necesites acceder a `paginate()` — eso devuelve un Query Builder genérico sin el método `paginate()`
+- **❌ INCORRECTO:** Usar `$this->builder()->paginate()` — el método builder() devuelve el query builder genérico
+
+**Patrón correcto en Modelos:**
+```php
+public function getConRelaciones(string $searchTerm = '')
+{
+    // Usa $this directamente, NO $this->db->table() o $this->builder()
+    $this->select('tabla.*, relacion.campo')
+        ->join('tabla_relacion', 'tabla.id = tabla_relacion.tabla_id', 'left')
+        ->where('tabla.deleted_at', null);
+
+    if ($searchTerm !== '') {
+        $this->groupStart()
+            ->like('campo1', $searchTerm)
+            ->orLike('campo2', $searchTerm)
+            ->groupEnd();
+    }
+
+    return $this->orderBy('tabla.id', 'DESC')->paginate(10);
+}
+```
+
+### 11.2 Try-Catch Infinitos - PROHIBIDO
+- **❌ PROHIBIDO:** `try { ... } catch(Throwable $e) { return redirect()->to(base_url('ruta-actual')) }`
+- Esto causa **ERR_TOO_MANY_REDIRECTS** porque redirige a la misma ruta que causó el error
+- Si el usuario accede a `/foo` y dentro hay un error capturado que redirige a `/foo`, entra en loop infinito
+
+**Patrón correcto en Controladores:**
+```php
+public function index()
+{
+    // Sin try-catch genérico que redirige a la misma ruta
+    // Deja que CodeIgniter muestre el error (en desarrollo) o usa log_message()
+    $data = $this->model->getData();
+    return view('index', ['data' => $data]);
+}
+
+// Solo usa try-catch si REDIRIGES A OTRA RUTA
+public function store()
+{
+    try {
+        $this->model->insert($data);
+        return redirect()->to(base_url('ruta-diferente'))
+            ->with('success', 'Guardado');
+    } catch (Throwable $e) {
+        // Ahora redirigir a otra ruta es seguro
+        return redirect()->back()->with('error', 'Error al guardar');
+    }
+}
+```
+
+### 11.3 Configuración de Filtros (Config/Filters.php) - RUTAS COMO ARRAYS
+- **Formato de rutas en filtros:** Las rutas deben estar como **strings en un array**, nunca anidadas con `'except' =>`
+- **✅ CORRECTO:**
+```php
+'permission' => [
+    'before' => [
+        'usuarios*',
+        'configuraciones*',
+        'presupuestos-divisiones*',
+    ],
+],
+```
+
+- **❌ INCORRECTO:** `'except' => [...]` como sub-clave dentro del array `'before'`
+- **❌ INCORRECTO:** Pasar un string suelto en lugar de un array
+
+### 11.4 Sincronización de Permisos - PASO OBLIGATORIO AL CREAR CONTROLADORES
+Cuando crees un nuevo Controlador con métodos públicos (index, create, store, edit, update, delete):
+1. El usuario DEBE ir a `/permisos`
+2. Hacer clic en **"Sincronizar permisos"** — descubre automáticamente nuevos métodos
+3. Luego ir a `/permisos/roles` y asignar permisos al rol del usuario
+4. **Sin esto, el PermissionFilter bloqueará el acceso** (Error 403 Access Denied)
+
+### 11.5 Migrations - Ejecución y Verificación
+- Comando correcto: `C:\xampp\php\php.exe spark migrate`
+- **NO es:** `php -l app/Database/Migrations/archivo.php` (eso solo verifica sintaxis)
+- Verifica que devuelva: `Running all new migrations... Migrations complete.`
+- Si no migra nada, probablemente ya fue ejecutada o hay un error de sintaxis en la migración
+
+### 11.6 Alias de Rutas - AMBAS VERSIONES REQUERIDAS
+Cuando crees rutas nuevas, SIEMPRE crea dos versiones:
+- Con guiones: `/presupuestos-divisiones`
+- Sin guiones: `/presupuestosdivisiones`
+
+Así se evitan confusiones y ambos patrones funcionan. Ejemplo:
+```php
+$routes->get('presupuestos-divisiones', 'PresupuestosDivisiones::index');
+$routes->get('presupuestos-divisiones/nuevo', 'PresupuestosDivisiones::create');
+// ... más rutas
+
+// Rutas alternativas sin guiones
+$routes->get('presupuestosdivisiones', 'PresupuestosDivisiones::index');
+$routes->get('presupuestosdivisiones/nuevo', 'PresupuestosDivisiones::create');
+// ... más rutas
+```
+
+### 11.7 Paginación - Solo en Modelos, NO en Controladores
+- El método `paginate()` **SOLO existe en Modelos**, no en Query Builder genérico
+- Si necesitas paginar en el Controlador desde un Query Builder ad-hoc, usa el patrón del Modelo
+- **Recomendación:** SIEMPRE delega la lógica de consulta complejas al Modelo mediante métodos publicos
+
+### 11.8 Debugging de Errores - ANTES DE HACER CAMBIOS MASIVOS
+- Si algo no funciona, **PRIMERO quita los try-catch** para ver el error real
+- Si hay loop de redirecciones, **PRIMERO verifica que no hay try-catch redirigiendo a la misma ruta**
+- Usa `log_message('error', $exception->getMessage())` para registrar errores sin exponer la aplicación
+- En desarrollo, deja que CodeIgniter muestre la pantalla de error completa — es más útil que un redirect ciego

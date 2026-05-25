@@ -62,7 +62,8 @@ class AddBodegasPermissions extends Migration
         ];
 
         foreach ($permisos as $permiso) {
-            $this->db->table('permisos')->insert($permiso);
+            // Se agrega ignore(true) para omitir si el permiso ya existe
+            $this->db->table('permisos')->ignore(true)->insert($permiso);
         }
 
         // Asignar permisos al rol Administrador (asumiendo id=1)
@@ -73,7 +74,8 @@ class AddBodegasPermissions extends Migration
             ->getResultArray();
 
         foreach ($permisoIds as $permiso) {
-            $this->db->table('rol_permisos')->insert([
+            // Se agrega ignore(true) para omitir si la relación rol-permiso ya existe
+            $this->db->table('rol_permisos')->ignore(true)->insert([
                 'id_rol'      => 1, // Administrador
                 'id_permiso'  => $permiso['id'],
                 'created_at'  => date('Y-m-d H:i:s'),

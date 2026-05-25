@@ -110,3 +110,19 @@ $routes->post('agregadoejerciciosfiscales/guardar', 'AgregadoEjerciciosFiscales:
 $routes->get('agregadoejerciciosfiscales/editar/(:num)', 'AgregadoEjerciciosFiscales::edit/$1');
 $routes->post('agregadoejerciciosfiscales/actualizar/(:num)', 'AgregadoEjerciciosFiscales::update/$1');
 $routes->post('agregadoejerciciosfiscales/eliminar/(:num)', 'AgregadoEjerciciosFiscales::delete/$1');
+
+$routes->get('presupuestos-divisiones', 'PresupuestosDivisiones::index');
+$routes->get('presupuestos-divisiones/nuevo', 'PresupuestosDivisiones::create');
+$routes->post('presupuestos-divisiones/guardar', 'PresupuestosDivisiones::store');
+$routes->get('presupuestos-divisiones/editar/(:num)', 'PresupuestosDivisiones::edit/$1');
+$routes->post('presupuestos-divisiones/actualizar/(:num)', 'PresupuestosDivisiones::update/$1');
+$routes->post('presupuestos-divisiones/eliminar/(:num)', 'PresupuestosDivisiones::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('presupuestosdivisiones', 'PresupuestosDivisiones::index');
+$routes->get('presupuestosdivisiones/nuevo', 'PresupuestosDivisiones::create');
+$routes->post('presupuestosdivisiones/guardar', 'PresupuestosDivisiones::store');
+$routes->get('presupuestosdivisiones/editar/(:num)', 'PresupuestosDivisiones::edit/$1');
+$routes->post('presupuestosdivisiones/actualizar/(:num)', 'PresupuestosDivisiones::update/$1');
+$routes->post('presupuestosdivisiones/eliminar/(:num)', 'PresupuestosDivisiones::delete/$1');
+
