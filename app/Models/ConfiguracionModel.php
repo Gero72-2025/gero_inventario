@@ -27,6 +27,7 @@ class ConfiguracionModel extends Model
         'id_usuario_creo',
         'id_usuario_actualizo',
         'id_usuario_elimino',
+        'deleted_at',
     ];
 
     protected bool $allowEmptyInserts = false;
