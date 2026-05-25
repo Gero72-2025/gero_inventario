@@ -126,3 +126,24 @@ $routes->get('presupuestosdivisiones/editar/(:num)', 'PresupuestosDivisiones::ed
 $routes->post('presupuestosdivisiones/actualizar/(:num)', 'PresupuestosDivisiones::update/$1');
 $routes->post('presupuestosdivisiones/eliminar/(:num)', 'PresupuestosDivisiones::delete/$1');
 
+$routes->get('presupuestos-renglones', 'PresupuestosRenglones::index');
+$routes->get('presupuestos-renglones/nuevo', 'PresupuestosRenglones::create');
+$routes->post('presupuestos-renglones/guardar', 'PresupuestosRenglones::store');
+$routes->get('presupuestos-renglones/ver/(:num)', 'PresupuestosRenglones::ver/$1');
+$routes->get('presupuestos-renglones/editar/(:num)', 'PresupuestosRenglones::editar/$1');
+$routes->post('presupuestos-renglones/actualizar/(:num)', 'PresupuestosRenglones::actualizar/$1');
+$routes->post('presupuestos-renglones/eliminar/(:num)', 'PresupuestosRenglones::delete/$1');
+$routes->get('presupuestos-renglones/getById/(:num)', 'PresupuestosRenglones::getById/$1');
+$routes->get('presupuestos-renglones/obtener-disponible/(:num)', 'PresupuestosRenglones::obtenerDisponible/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('presupuestosrenglones', 'PresupuestosRenglones::index');
+$routes->get('presupuestosrenglones/nuevo', 'PresupuestosRenglones::create');
+$routes->post('presupuestosrenglones/guardar', 'PresupuestosRenglones::store');
+$routes->get('presupuestosrenglones/ver/(:num)', 'PresupuestosRenglones::ver/$1');
+$routes->get('presupuestosrenglones/editar/(:num)', 'PresupuestosRenglones::editar/$1');
+$routes->post('presupuestosrenglones/actualizar/(:num)', 'PresupuestosRenglones::actualizar/$1');
+$routes->post('presupuestosrenglones/eliminar/(:num)', 'PresupuestosRenglones::delete/$1');
+$routes->get('presupuestosrenglones/getById/(:num)', 'PresupuestosRenglones::getById/$1');
+$routes->get('presupuestosrenglones/obtener-disponible/(:num)', 'PresupuestosRenglones::obtenerDisponible/$1');
+
