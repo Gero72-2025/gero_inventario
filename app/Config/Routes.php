@@ -57,3 +57,12 @@ $routes->get('bodegas/editar/(:num)', 'Bodegas::editar/$1');
 $routes->post('bodegas/actualizar/(:num)', 'Bodegas::actualizar/$1');
 $routes->post('bodegas/eliminar/(:num)', 'Bodegas::delete/$1');
 $routes->get('bodegas/getById/(:num)', 'Bodegas::getById/$1');
+
+$routes->get('renglones', 'Renglones::index');
+$routes->get('renglones/nuevo', 'Renglones::create');
+$routes->post('renglones', 'Renglones::store');
+$routes->get('renglones/ver/(:num)', 'Renglones::ver/$1');
+$routes->get('renglones/editar/(:num)', 'Renglones::editar/$1');
+$routes->post('renglones/actualizar/(:num)', 'Renglones::actualizar/$1');
+$routes->post('renglones/eliminar/(:num)', 'Renglones::delete/$1');
+$routes->get('renglones/getById/(:num)', 'Renglones::getById/$1');
