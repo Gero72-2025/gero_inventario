@@ -95,3 +95,18 @@ $routes->post('proveedores/guardar', 'Proveedores::store');
 $routes->get('proveedores/editar/(:num)', 'Proveedores::edit/$1');
 $routes->post('proveedores/actualizar/(:num)', 'Proveedores::update/$1');
 $routes->post('proveedores/eliminar/(:num)', 'Proveedores::delete/$1');
+
+$routes->get('agregado-ejercicios-fiscales', 'AgregadoEjerciciosFiscales::index');
+$routes->get('agregado-ejercicios-fiscales/nuevo', 'AgregadoEjerciciosFiscales::create');
+$routes->post('agregado-ejercicios-fiscales/guardar', 'AgregadoEjerciciosFiscales::store');
+$routes->get('agregado-ejercicios-fiscales/editar/(:num)', 'AgregadoEjerciciosFiscales::edit/$1');
+$routes->post('agregado-ejercicios-fiscales/actualizar/(:num)', 'AgregadoEjerciciosFiscales::update/$1');
+$routes->post('agregado-ejercicios-fiscales/eliminar/(:num)', 'AgregadoEjerciciosFiscales::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('agregadoejerciciosfiscales', 'AgregadoEjerciciosFiscales::index');
+$routes->get('agregadoejerciciosfiscales/nuevo', 'AgregadoEjerciciosFiscales::create');
+$routes->post('agregadoejerciciosfiscales/guardar', 'AgregadoEjerciciosFiscales::store');
+$routes->get('agregadoejerciciosfiscales/editar/(:num)', 'AgregadoEjerciciosFiscales::edit/$1');
+$routes->post('agregadoejerciciosfiscales/actualizar/(:num)', 'AgregadoEjerciciosFiscales::update/$1');
+$routes->post('agregadoejerciciosfiscales/eliminar/(:num)', 'AgregadoEjerciciosFiscales::delete/$1');
