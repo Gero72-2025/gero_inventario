@@ -37,6 +37,8 @@
                 <thead class="table-light">
                 <tr>
                     <th>Código Renglón</th>
+                    <th>Año</th>
+                    <th>División</th>
                     <th>Descripción</th>
                     <th>Monto Asignado</th>
                     <th>Saldo Actual</th>
@@ -48,12 +50,14 @@
                 <tbody>
                 <?php if (empty($presupuestos)): ?>
                     <tr>
-                        <td colspan="7" class="text-center py-4">No hay presupuestos renglones registrados.</td>
+                        <td colspan="9" class="text-center py-4">No hay presupuestos renglones registrados.</td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($presupuestos as $presupuesto): ?>
                         <tr data-presupuesto-id="<?= esc($presupuesto['id']) ?>">
                             <td><strong><?= esc($presupuesto['codigo_renglon']) ?></strong></td>
+                            <td><?= esc($presupuesto['anio']) ?></td>
+                            <td><?= esc($presupuesto['nombre_division']) ?></td>
                             <td><?= esc(substr($presupuesto['descripcion'], 0, 50)) ?><?= strlen($presupuesto['descripcion']) > 50 ? '...' : '' ?></td>
                             <td><?= number_format($presupuesto['monto_asignado'], 2, ',', '.') ?></td>
                             <td><?= number_format($presupuesto['saldo_actual'], 2, ',', '.') ?></td>

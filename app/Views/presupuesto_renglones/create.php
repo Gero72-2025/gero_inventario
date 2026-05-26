@@ -38,7 +38,7 @@
                         <option value="">Seleccionar presupuesto...</option>
                         <?php foreach ($presupuestos as $presupuesto): ?>
                             <option value="<?= esc($presupuesto['id']) ?>" data-monto="<?= esc($presupuesto['saldo_actual']) ?>" <?= old('id_presupuesto_division') == $presupuesto['id'] ? 'selected' : '' ?>>
-                                Año: <?= esc($presupuesto['anio']) ?> - <?= esc($presupuesto['nombre_division']) ?> (Disponible: <?= number_format($presupuesto['saldo_actual'], 2, ',', '.') ?>)
+                                Año: <?= esc($presupuesto['anio']) ?> - <?= esc($presupuesto['nombre_division']) ?>
                             </option>
                         <?php endforeach; ?>
                     </select>

@@ -58,16 +58,23 @@ class PresupuestosRenglones extends Controller
 
         try {
             $renglones = $this->renglonesModel->where('deleted_at', null)->findAll();
-            $presupuestos = $this->presupuestosDivisionModel
-                ->select('MAX(pd.id) as id, COALESCE(cef.anio, 0) as anio, COALESCE(cd.nombre_division, "Sin división") as nombre_division, MAX(pd.saldo_actual) as saldo_actual, MAX(pd.monto_asignado) as monto_asignado')
-                ->from('presupuestos_division pd')
-                ->join('cat_ejercicios_fiscales cef', 'pd.id_ejercicio = cef.id', 'left')
-                ->join('cat_divisiones cd', 'pd.id_division = cd.id', 'left')
-                ->where('pd.deleted_at', null)
-                ->where('pd.status', 'activo')
-                ->groupBy('cef.anio, cd.id')
-                ->orderBy('cef.anio', 'DESC')
-                ->findAll();
+
+            $db = \Config\Database::connect();
+            $subquery = $db->table('presupuestos_division pd2')
+                ->select('MAX(pd2.id) as id')
+                ->where('pd2.deleted_at', null)
+                ->where('pd2.status', 'activo')
+                ->groupBy('pd2.id_ejercicio, pd2.id_division')
+                ->getCompiledSelect();
+
+            $presupuestos = $db->query(
+                "SELECT DISTINCT pd.id, COALESCE(cef.anio, 0) as anio, COALESCE(cd.nombre_division, 'Sin división') as nombre_division, pd.saldo_actual, pd.monto_asignado
+                FROM presupuestos_division pd
+                LEFT JOIN cat_ejercicios_fiscales cef ON pd.id_ejercicio = cef.id
+                LEFT JOIN cat_divisiones cd ON pd.id_division = cd.id
+                WHERE pd.id IN ($subquery)
+                ORDER BY cef.anio DESC, pd.id DESC"
+            )->getResultArray();
 
             $data['title']       = 'Nuevo Presupuesto Renglón';
             $data['heading']     = 'Crear Nuevo Presupuesto Renglón';
@@ -194,16 +201,23 @@ class PresupuestosRenglones extends Controller
             }
 
             $renglones = $this->renglonesModel->where('deleted_at', null)->findAll();
-            $presupuestos = $this->presupuestosDivisionModel
-                ->select('MAX(pd.id) as id, COALESCE(cef.anio, 0) as anio, COALESCE(cd.nombre_division, "Sin división") as nombre_division, MAX(pd.saldo_actual) as saldo_actual, MAX(pd.monto_asignado) as monto_asignado')
-                ->from('presupuestos_division pd')
-                ->join('cat_ejercicios_fiscales cef', 'pd.id_ejercicio = cef.id', 'left')
-                ->join('cat_divisiones cd', 'pd.id_division = cd.id', 'left')
-                ->where('pd.deleted_at', null)
-                ->where('pd.status', 'activo')
-                ->groupBy('cef.anio, cd.id')
-                ->orderBy('cef.anio', 'DESC')
-                ->findAll();
+
+            $db = \Config\Database::connect();
+            $subquery = $db->table('presupuestos_division pd2')
+                ->select('MAX(pd2.id) as id')
+                ->where('pd2.deleted_at', null)
+                ->where('pd2.status', 'activo')
+                ->groupBy('pd2.id_ejercicio, pd2.id_division')
+                ->getCompiledSelect();
+
+            $presupuestos = $db->query(
+                "SELECT DISTINCT pd.id, COALESCE(cef.anio, 0) as anio, COALESCE(cd.nombre_division, 'Sin división') as nombre_division, pd.saldo_actual, pd.monto_asignado
+                FROM presupuestos_division pd
+                LEFT JOIN cat_ejercicios_fiscales cef ON pd.id_ejercicio = cef.id
+                LEFT JOIN cat_divisiones cd ON pd.id_division = cd.id
+                WHERE pd.id IN ($subquery)
+                ORDER BY cef.anio DESC, pd.id DESC"
+            )->getResultArray();
 
             $data['presupuesto']  = $presupuesto;
             $data['renglones']    = $renglones;
