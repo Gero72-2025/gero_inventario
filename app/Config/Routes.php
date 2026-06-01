@@ -147,3 +147,18 @@ $routes->post('presupuestosrenglones/eliminar/(:num)', 'PresupuestosRenglones::d
 $routes->get('presupuestosrenglones/getById/(:num)', 'PresupuestosRenglones::getById/$1');
 $routes->get('presupuestosrenglones/obtener-disponible/(:num)', 'PresupuestosRenglones::obtenerDisponible/$1');
 
+$routes->get('empleados', 'Empleados::index');
+$routes->get('empleados/nuevo', 'Empleados::create');
+$routes->post('empleados/guardar', 'Empleados::store');
+$routes->get('empleados/editar/(:num)', 'Empleados::edit/$1');
+$routes->post('empleados/actualizar/(:num)', 'Empleados::update/$1');
+$routes->post('empleados/eliminar/(:num)', 'Empleados::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('empleados', 'Empleados::index');
+$routes->get('empleados/nuevo', 'Empleados::create');
+$routes->post('empleados/guardar', 'Empleados::store');
+$routes->get('empleados/editar/(:num)', 'Empleados::edit/$1');
+$routes->post('empleados/actualizar/(:num)', 'Empleados::update/$1');
+$routes->post('empleados/eliminar/(:num)', 'Empleados::delete/$1');
+
