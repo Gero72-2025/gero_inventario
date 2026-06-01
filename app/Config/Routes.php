@@ -179,3 +179,21 @@ $routes->post('contratosempleados/actualizar/(:num)', 'ContratosEmpleados::updat
 $routes->post('contratosempleados/eliminar/(:num)', 'ContratosEmpleados::delete/$1');
 $routes->get('contratosempleados/descargar-pdf/(:num)', 'ContratosEmpleados::descargarPdf/$1');
 
+$routes->get('solicitudes-encabezado', 'SolicitudesEncabezado::index');
+$routes->get('solicitudes-encabezado/nuevo', 'SolicitudesEncabezado::create');
+$routes->post('solicitudes-encabezado', 'SolicitudesEncabezado::store');
+$routes->get('solicitudes-encabezado/ver/(:num)', 'SolicitudesEncabezado::ver/$1');
+$routes->get('solicitudes-encabezado/editar/(:num)', 'SolicitudesEncabezado::editar/$1');
+$routes->post('solicitudes-encabezado/actualizar/(:num)', 'SolicitudesEncabezado::actualizar/$1');
+$routes->post('solicitudes-encabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
+$routes->get('solicitudes-encabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('solicitudesencabezado', 'SolicitudesEncabezado::index');
+$routes->get('solicitudesencabezado/nuevo', 'SolicitudesEncabezado::create');
+$routes->post('solicitudesencabezado', 'SolicitudesEncabezado::store');
+$routes->get('solicitudesencabezado/ver/(:num)', 'SolicitudesEncabezado::ver/$1');
+$routes->get('solicitudesencabezado/editar/(:num)', 'SolicitudesEncabezado::editar/$1');
+$routes->post('solicitudesencabezado/actualizar/(:num)', 'SolicitudesEncabezado::actualizar/$1');
+$routes->post('solicitudesencabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
+$routes->get('solicitudesencabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
