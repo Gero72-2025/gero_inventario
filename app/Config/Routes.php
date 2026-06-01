@@ -162,3 +162,20 @@ $routes->get('empleados/editar/(:num)', 'Empleados::edit/$1');
 $routes->post('empleados/actualizar/(:num)', 'Empleados::update/$1');
 $routes->post('empleados/eliminar/(:num)', 'Empleados::delete/$1');
 
+$routes->get('contratos-empleados', 'ContratosEmpleados::index');
+$routes->get('contratos-empleados/nuevo', 'ContratosEmpleados::create');
+$routes->post('contratos-empleados/guardar', 'ContratosEmpleados::store');
+$routes->get('contratos-empleados/editar/(:num)', 'ContratosEmpleados::edit/$1');
+$routes->post('contratos-empleados/actualizar/(:num)', 'ContratosEmpleados::update/$1');
+$routes->post('contratos-empleados/eliminar/(:num)', 'ContratosEmpleados::delete/$1');
+$routes->get('contratos-empleados/descargar-pdf/(:num)', 'ContratosEmpleados::descargarPdf/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('contratosempleados', 'ContratosEmpleados::index');
+$routes->get('contratosempleados/nuevo', 'ContratosEmpleados::create');
+$routes->post('contratosempleados/guardar', 'ContratosEmpleados::store');
+$routes->get('contratosempleados/editar/(:num)', 'ContratosEmpleados::edit/$1');
+$routes->post('contratosempleados/actualizar/(:num)', 'ContratosEmpleados::update/$1');
+$routes->post('contratosempleados/eliminar/(:num)', 'ContratosEmpleados::delete/$1');
+$routes->get('contratosempleados/descargar-pdf/(:num)', 'ContratosEmpleados::descargarPdf/$1');
+
