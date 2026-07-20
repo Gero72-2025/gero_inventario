@@ -188,6 +188,14 @@ $routes->post('solicitudes-encabezado/actualizar/(:num)', 'SolicitudesEncabezado
 $routes->post('solicitudes-encabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
 $routes->get('solicitudes-encabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
 
+$routes->get('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::index');
+$routes->get('solicitudes-historial-etapas/nuevo', 'SolicitudesHistorialEtapas::create');
+$routes->post('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::store');
+$routes->get('solicitudes-historial-etapas/ver/(:num)', 'SolicitudesHistorialEtapas::ver/$1');
+$routes->get('solicitudes-historial-etapas/editar/(:num)', 'SolicitudesHistorialEtapas::editar/$1');
+$routes->post('solicitudes-historial-etapas/actualizar/(:num)', 'SolicitudesHistorialEtapas::actualizar/$1');
+$routes->post('solicitudes-historial-etapas/eliminar/(:num)', 'SolicitudesHistorialEtapas::delete/$1');
+
 // Rutas alternativas sin guiones
 $routes->get('solicitudesencabezado', 'SolicitudesEncabezado::index');
 $routes->get('solicitudesencabezado/nuevo', 'SolicitudesEncabezado::create');
@@ -197,3 +205,11 @@ $routes->get('solicitudesencabezado/editar/(:num)', 'SolicitudesEncabezado::edit
 $routes->post('solicitudesencabezado/actualizar/(:num)', 'SolicitudesEncabezado::actualizar/$1');
 $routes->post('solicitudesencabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
 $routes->get('solicitudesencabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
+
+$routes->get('solicitudeshistorialetapas', 'SolicitudesHistorialEtapas::index');
+$routes->get('solicitudeshistorialetapas/nuevo', 'SolicitudesHistorialEtapas::create');
+$routes->post('solicitudeshistorialetapas', 'SolicitudesHistorialEtapas::store');
+$routes->get('solicitudeshistorialetapas/ver/(:num)', 'SolicitudesHistorialEtapas::ver/$1');
+$routes->get('solicitudeshistorialetapas/editar/(:num)', 'SolicitudesHistorialEtapas::editar/$1');
+$routes->post('solicitudeshistorialetapas/actualizar/(:num)', 'SolicitudesHistorialEtapas::actualizar/$1');
+$routes->post('solicitudeshistorialetapas/eliminar/(:num)', 'SolicitudesHistorialEtapas::delete/$1');
