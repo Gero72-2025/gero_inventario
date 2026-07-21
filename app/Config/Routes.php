@@ -213,3 +213,18 @@ $routes->get('solicitudeshistorialetapas/ver/(:num)', 'SolicitudesHistorialEtapa
 $routes->get('solicitudeshistorialetapas/editar/(:num)', 'SolicitudesHistorialEtapas::editar/$1');
 $routes->post('solicitudeshistorialetapas/actualizar/(:num)', 'SolicitudesHistorialEtapas::actualizar/$1');
 $routes->post('solicitudeshistorialetapas/eliminar/(:num)', 'SolicitudesHistorialEtapas::delete/$1');
+
+$routes->get('facturas-liquidacion', 'FacturasLiquidacion::index');
+$routes->get('facturas-liquidacion/nuevo', 'FacturasLiquidacion::create');
+$routes->post('facturas-liquidacion/guardar', 'FacturasLiquidacion::store');
+$routes->get('facturas-liquidacion/editar/(:num)', 'FacturasLiquidacion::edit/$1');
+$routes->post('facturas-liquidacion/actualizar/(:num)', 'FacturasLiquidacion::update/$1');
+$routes->post('facturas-liquidacion/eliminar/(:num)', 'FacturasLiquidacion::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('facturasliquidacion', 'FacturasLiquidacion::index');
+$routes->get('facturasliquidacion/nuevo', 'FacturasLiquidacion::create');
+$routes->post('facturasliquidacion/guardar', 'FacturasLiquidacion::store');
+$routes->get('facturasliquidacion/editar/(:num)', 'FacturasLiquidacion::edit/$1');
+$routes->post('facturasliquidacion/actualizar/(:num)', 'FacturasLiquidacion::update/$1');
+$routes->post('facturasliquidacion/eliminar/(:num)', 'FacturasLiquidacion::delete/$1');

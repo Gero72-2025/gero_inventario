@@ -128,6 +128,8 @@ class Filters extends BaseFilters
                 'presupuestosdivisiones*',
                 'presupuestos-renglones*',
                 'presupuestosrenglones*',
+                'facturas-liquidacion*',
+                'facturasliquidacion*',
             ],
         ],
         'permission' => [
@@ -146,6 +148,8 @@ class Filters extends BaseFilters
                 'agregadoejerciciosfiscales*',
                 'presupuestos-renglones*',
                 'presupuestosrenglones*',
+                'facturas-liquidacion*',
+                'facturasliquidacion*',
             ],
         ],
     ];
