@@ -1,0 +1,111 @@
+<?= $this->extend('layouts/app') ?>
+
+<?= $this->section('content') ?>
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h3 mb-0">Historial de etapas</h1>
+        <a href="<?= base_url('solicitudes-historial-etapas/nuevo') ?>" class="btn btn-primary">Nuevo registro</a>
+    </div>
+
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success"><?= esc(session()->getFlashdata('success')) ?></div>
+    <?php endif; ?>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif; ?>
+
+    <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body">
+            <form method="get" action="<?= base_url('solicitudes-historial-etapas') ?>" class="row g-2 align-items-center">
+                <div class="col-md-8">
+                    <input type="text" name="q" class="form-control" placeholder="Filtrar por solicitud, etapa o comentario" value="<?= esc($searchTerm ?? '') ?>">
+                </div>
+                <div class="col-md-auto">
+                    <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+                </div>
+                <div class="col-md-auto">
+                    <a href="<?= base_url('solicitudes-historial-etapas') ?>" class="btn btn-outline-secondary">Limpiar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Solicitud</th>
+                        <th>Etapa anterior</th>
+                        <th>Etapa nueva</th>
+                        <th>Comentario</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (empty($registros)): ?>
+                        <tr><td colspan="6" class="text-center py-4">No hay registros.</td></tr>
+                    <?php else: ?>
+                        <?php foreach ($registros as $registro): ?>
+                            <tr>
+                                <td><?= esc($registro['id']) ?></td>
+                                <td><?= esc($registro['folio_solicitud'] ?? 'Sin solicitud') ?></td>
+                                <td><?= esc($registro['etapa_anterior'] ?? 'Sin etapa anterior') ?></td>
+                                <td><?= esc($registro['etapa_nueva'] ?? 'Sin etapa nueva') ?></td>
+                                <td><?= esc($registro['comentario_transicion'] ?? '') ?></td>
+                                <td class="text-end">
+                                    <a href="<?= base_url('solicitudes-historial-etapas/ver/' . $registro['id']) ?>" class="btn btn-sm btn-outline-info">Ver</a>
+                                    <a href="<?= base_url('solicitudes-historial-etapas/editar/' . $registro['id']) ?>" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                    <form action="<?= base_url('solicitudes-historial-etapas/eliminar/' . $registro['id']) ?>" method="post" class="d-inline">
+                                        <?= csrf_field() ?>
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger"
+                                                data-gero-confirm
+                                                data-title="Eliminar registro"
+                                                data-message="¿Deseas eliminar este registro de historial? Esta acción no se puede deshacer."
+                                                data-type="danger"
+                                                data-confirm-label="Eliminar">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <?php
+    $pagerDetails = $pager->getDetails();
+    $totalPages = (int) ($pagerDetails['pageCount'] ?? 1);
+    $currentPage = (int) ($pagerDetails['currentPage'] ?? 1);
+    $canNavigate = $totalPages > 1;
+    ?>
+    <div class="mt-3 text-center">
+        <small class="text-muted d-block mb-2">
+            Página <?= esc((string) $currentPage) ?> de <?= esc((string) $totalPages) ?>
+        </small>
+        <nav aria-label="Paginación" class="d-inline-block">
+            <ul class="pagination mb-0">
+                <li class="page-item <?= ($canNavigate && !empty($pagerDetails['hasPrevious'])) ? '' : 'disabled' ?>">
+                    <a class="page-link" href="<?= ($canNavigate && !empty($pagerDetails['hasPrevious'])) ? esc((string) ($pagerDetails['previous'] ?? '#')) : '#' ?>">Anterior</a>
+                </li>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                        <a class="page-link" href="<?= $canNavigate ? esc($pager->getPageURI($i)) : '#' ?>">
+                            <?= esc((string) $i) ?>
+                        </a>
+                    </li>
+                <?php endfor; ?>
+                <li class="page-item <?= ($canNavigate && !empty($pagerDetails['hasNext'])) ? '' : 'disabled' ?>">
+                    <a class="page-link" href="<?= ($canNavigate && !empty($pagerDetails['hasNext'])) ? esc((string) ($pagerDetails['next'] ?? '#')) : '#' ?>">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<?= $this->endSection() ?>

@@ -126,3 +126,105 @@ $routes->get('presupuestosdivisiones/editar/(:num)', 'PresupuestosDivisiones::ed
 $routes->post('presupuestosdivisiones/actualizar/(:num)', 'PresupuestosDivisiones::update/$1');
 $routes->post('presupuestosdivisiones/eliminar/(:num)', 'PresupuestosDivisiones::delete/$1');
 
+$routes->get('presupuestos-renglones', 'PresupuestosRenglones::index');
+$routes->get('presupuestos-renglones/nuevo', 'PresupuestosRenglones::create');
+$routes->post('presupuestos-renglones/guardar', 'PresupuestosRenglones::store');
+$routes->get('presupuestos-renglones/ver/(:num)', 'PresupuestosRenglones::ver/$1');
+$routes->get('presupuestos-renglones/editar/(:num)', 'PresupuestosRenglones::editar/$1');
+$routes->post('presupuestos-renglones/actualizar/(:num)', 'PresupuestosRenglones::actualizar/$1');
+$routes->post('presupuestos-renglones/eliminar/(:num)', 'PresupuestosRenglones::delete/$1');
+$routes->get('presupuestos-renglones/getById/(:num)', 'PresupuestosRenglones::getById/$1');
+$routes->get('presupuestos-renglones/obtener-disponible/(:num)', 'PresupuestosRenglones::obtenerDisponible/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('presupuestosrenglones', 'PresupuestosRenglones::index');
+$routes->get('presupuestosrenglones/nuevo', 'PresupuestosRenglones::create');
+$routes->post('presupuestosrenglones/guardar', 'PresupuestosRenglones::store');
+$routes->get('presupuestosrenglones/ver/(:num)', 'PresupuestosRenglones::ver/$1');
+$routes->get('presupuestosrenglones/editar/(:num)', 'PresupuestosRenglones::editar/$1');
+$routes->post('presupuestosrenglones/actualizar/(:num)', 'PresupuestosRenglones::actualizar/$1');
+$routes->post('presupuestosrenglones/eliminar/(:num)', 'PresupuestosRenglones::delete/$1');
+$routes->get('presupuestosrenglones/getById/(:num)', 'PresupuestosRenglones::getById/$1');
+$routes->get('presupuestosrenglones/obtener-disponible/(:num)', 'PresupuestosRenglones::obtenerDisponible/$1');
+
+$routes->get('empleados', 'Empleados::index');
+$routes->get('empleados/nuevo', 'Empleados::create');
+$routes->post('empleados/guardar', 'Empleados::store');
+$routes->get('empleados/editar/(:num)', 'Empleados::edit/$1');
+$routes->post('empleados/actualizar/(:num)', 'Empleados::update/$1');
+$routes->post('empleados/eliminar/(:num)', 'Empleados::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('empleados', 'Empleados::index');
+$routes->get('empleados/nuevo', 'Empleados::create');
+$routes->post('empleados/guardar', 'Empleados::store');
+$routes->get('empleados/editar/(:num)', 'Empleados::edit/$1');
+$routes->post('empleados/actualizar/(:num)', 'Empleados::update/$1');
+$routes->post('empleados/eliminar/(:num)', 'Empleados::delete/$1');
+
+$routes->get('contratos-empleados', 'ContratosEmpleados::index');
+$routes->get('contratos-empleados/nuevo', 'ContratosEmpleados::create');
+$routes->post('contratos-empleados/guardar', 'ContratosEmpleados::store');
+$routes->get('contratos-empleados/editar/(:num)', 'ContratosEmpleados::edit/$1');
+$routes->post('contratos-empleados/actualizar/(:num)', 'ContratosEmpleados::update/$1');
+$routes->post('contratos-empleados/eliminar/(:num)', 'ContratosEmpleados::delete/$1');
+$routes->get('contratos-empleados/descargar-pdf/(:num)', 'ContratosEmpleados::descargarPdf/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('contratosempleados', 'ContratosEmpleados::index');
+$routes->get('contratosempleados/nuevo', 'ContratosEmpleados::create');
+$routes->post('contratosempleados/guardar', 'ContratosEmpleados::store');
+$routes->get('contratosempleados/editar/(:num)', 'ContratosEmpleados::edit/$1');
+$routes->post('contratosempleados/actualizar/(:num)', 'ContratosEmpleados::update/$1');
+$routes->post('contratosempleados/eliminar/(:num)', 'ContratosEmpleados::delete/$1');
+$routes->get('contratosempleados/descargar-pdf/(:num)', 'ContratosEmpleados::descargarPdf/$1');
+
+$routes->get('solicitudes-encabezado', 'SolicitudesEncabezado::index');
+$routes->get('solicitudes-encabezado/nuevo', 'SolicitudesEncabezado::create');
+$routes->post('solicitudes-encabezado', 'SolicitudesEncabezado::store');
+$routes->get('solicitudes-encabezado/ver/(:num)', 'SolicitudesEncabezado::ver/$1');
+$routes->get('solicitudes-encabezado/editar/(:num)', 'SolicitudesEncabezado::editar/$1');
+$routes->post('solicitudes-encabezado/actualizar/(:num)', 'SolicitudesEncabezado::actualizar/$1');
+$routes->post('solicitudes-encabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
+$routes->get('solicitudes-encabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
+
+$routes->get('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::index');
+$routes->get('solicitudes-historial-etapas/nuevo', 'SolicitudesHistorialEtapas::create');
+$routes->post('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::store');
+$routes->get('solicitudes-historial-etapas/ver/(:num)', 'SolicitudesHistorialEtapas::ver/$1');
+$routes->get('solicitudes-historial-etapas/editar/(:num)', 'SolicitudesHistorialEtapas::editar/$1');
+$routes->post('solicitudes-historial-etapas/actualizar/(:num)', 'SolicitudesHistorialEtapas::actualizar/$1');
+$routes->post('solicitudes-historial-etapas/eliminar/(:num)', 'SolicitudesHistorialEtapas::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('solicitudesencabezado', 'SolicitudesEncabezado::index');
+$routes->get('solicitudesencabezado/nuevo', 'SolicitudesEncabezado::create');
+$routes->post('solicitudesencabezado', 'SolicitudesEncabezado::store');
+$routes->get('solicitudesencabezado/ver/(:num)', 'SolicitudesEncabezado::ver/$1');
+$routes->get('solicitudesencabezado/editar/(:num)', 'SolicitudesEncabezado::editar/$1');
+$routes->post('solicitudesencabezado/actualizar/(:num)', 'SolicitudesEncabezado::actualizar/$1');
+$routes->post('solicitudesencabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
+$routes->get('solicitudesencabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
+
+$routes->get('solicitudeshistorialetapas', 'SolicitudesHistorialEtapas::index');
+$routes->get('solicitudeshistorialetapas/nuevo', 'SolicitudesHistorialEtapas::create');
+$routes->post('solicitudeshistorialetapas', 'SolicitudesHistorialEtapas::store');
+$routes->get('solicitudeshistorialetapas/ver/(:num)', 'SolicitudesHistorialEtapas::ver/$1');
+$routes->get('solicitudeshistorialetapas/editar/(:num)', 'SolicitudesHistorialEtapas::editar/$1');
+$routes->post('solicitudeshistorialetapas/actualizar/(:num)', 'SolicitudesHistorialEtapas::actualizar/$1');
+$routes->post('solicitudeshistorialetapas/eliminar/(:num)', 'SolicitudesHistorialEtapas::delete/$1');
+
+$routes->get('facturas-liquidacion', 'FacturasLiquidacion::index');
+$routes->get('facturas-liquidacion/nuevo', 'FacturasLiquidacion::create');
+$routes->post('facturas-liquidacion/guardar', 'FacturasLiquidacion::store');
+$routes->get('facturas-liquidacion/editar/(:num)', 'FacturasLiquidacion::edit/$1');
+$routes->post('facturas-liquidacion/actualizar/(:num)', 'FacturasLiquidacion::update/$1');
+$routes->post('facturas-liquidacion/eliminar/(:num)', 'FacturasLiquidacion::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('facturasliquidacion', 'FacturasLiquidacion::index');
+$routes->get('facturasliquidacion/nuevo', 'FacturasLiquidacion::create');
+$routes->post('facturasliquidacion/guardar', 'FacturasLiquidacion::store');
+$routes->get('facturasliquidacion/editar/(:num)', 'FacturasLiquidacion::edit/$1');
+$routes->post('facturasliquidacion/actualizar/(:num)', 'FacturasLiquidacion::update/$1');
+$routes->post('facturasliquidacion/eliminar/(:num)', 'FacturasLiquidacion::delete/$1');

@@ -126,6 +126,10 @@ class Filters extends BaseFilters
                 'agregadoejerciciosfiscales*',
                 'presupuestos-divisiones*',
                 'presupuestosdivisiones*',
+                'presupuestos-renglones*',
+                'presupuestosrenglones*',
+                'facturas-liquidacion*',
+                'facturasliquidacion*',
             ],
         ],
         'permission' => [
@@ -142,6 +146,10 @@ class Filters extends BaseFilters
                 'proveedores*',
                 'agregado-ejercicios-fiscales*',
                 'agregadoejerciciosfiscales*',
+                'presupuestos-renglones*',
+                'presupuestosrenglones*',
+                'facturas-liquidacion*',
+                'facturasliquidacion*',
             ],
         ],
     ];

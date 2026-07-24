@@ -1,0 +1,20 @@
+<?= $this->extend('layouts/app') ?>
+
+<?= $this->section('content') ?>
+<div class="container py-4">
+    <h1 class="h3 mb-3">Nuevo empleado</h1>
+
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= esc(session()->getFlashdata('error')) ?></div>
+    <?php endif; ?>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <form action="<?= base_url('empleados/guardar') ?>" method="post">
+                <?= csrf_field() ?>
+                <?= view('empleados/_form', ['submitLabel' => 'Guardar', 'divisiones' => $divisiones]) ?>
+            </form>
+        </div>
+    </div>
+</div>
+<?= $this->endSection() ?>
