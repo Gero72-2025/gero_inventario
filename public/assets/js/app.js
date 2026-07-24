@@ -33,6 +33,29 @@
     });
 })();
 
+// Ensure mouse wheel over the sidebar scrolls the sidebar instead of the page
+(function () {
+    const sidebarEl = document.querySelector('.app-sidebar');
+    if (!sidebarEl) return;
+
+    // Non-passive so we can call preventDefault()
+    sidebarEl.addEventListener('wheel', function (e) {
+        // Only handle vertical wheel
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+
+        const atTop = sidebarEl.scrollTop === 0 && e.deltaY < 0;
+        const atBottom = Math.ceil(sidebarEl.scrollTop + sidebarEl.clientHeight) >= sidebarEl.scrollHeight && e.deltaY > 0;
+
+        // If the sidebar can scroll in the wheel direction, consume the event and scroll it.
+        if (!atTop && !atBottom) {
+            e.preventDefault();
+            e.stopPropagation();
+            sidebarEl.scrollTop += e.deltaY;
+        }
+        // otherwise, let the event bubble so the page can scroll
+    }, { passive: false });
+})();
+
 /* ============================================================
  * GeroModal — Sistema de Modales Global
  * ============================================================

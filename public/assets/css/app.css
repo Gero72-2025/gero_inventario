@@ -1,5 +1,5 @@
 :root {
-    --sidebar-width: 250px;
+    --sidebar-width: 300px; /* aumentado para evitar scroll horizontal al aumentar texto */
     --header-height: 64px;
 }
 
@@ -19,39 +19,65 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    bottom: 0;
     width: var(--sidebar-width);
-    height: 100vh;
+    /* use top+bottom so the element fits the viewport reliably across browsers */
+    height: auto;
+    max-height: 100vh;
+    box-sizing: border-box;
     background: #152238;
     color: #fff;
     z-index: 1030;
     padding: 1.25rem 1rem;
     transition: transform .25s ease;
+    overflow-y: auto;
+    overflow-x: hidden; /* evita scrollbar horizontal */
+    overscroll-behavior-y: contain; /* keep wheel/touch scroll inside sidebar */
+    -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
 }
+
+/* Scrollbar styling para hacerla más visible (WebKit & Firefox) */
+.app-sidebar::-webkit-scrollbar { width: 10px; }
+.app-sidebar::-webkit-scrollbar-track { background: transparent; }
+.app-sidebar::-webkit-scrollbar-thumb { background: #223658; border-radius: 8px; }
+.app-sidebar { scrollbar-width: thin; scrollbar-color: #223658 transparent; }
 
 .sidebar-backdrop {
     display: none;
 }
 
 .app-sidebar .brand {
-    font-size: 1.1rem;
+    font-size: 1.25rem; /* un poco más grande */
     font-weight: 700;
     margin-bottom: 1.5rem;
     letter-spacing: .02em;
+    color: #f3f8ff; /* más contraste */
 }
 
 .app-sidebar .nav-link {
-    color: #dce3ee;
+    color: #eef6ff; /* color más brillante sobre #152238 */
     border-radius: .5rem;
-    margin-bottom: .4rem;
-    padding: .55rem .75rem;
+    margin-bottom: .45rem;
+    padding: .65rem .9rem; /* ligeramente más espacio */
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: .6rem;
+    font-size: 1.02rem; /* aumentar levemente el tamaño del texto */
+}
+
+.app-sidebar .nav-link i {
+    font-size: 1.1rem; /* iconos más visibles */
+    color: inherit;
+}
+
+.app-sidebar .nav-link span {
+    display: inline-block;
+    line-height: 1;
 }
 
 .app-sidebar .nav-link:hover,
 .app-sidebar .nav-link.active {
-    background: #223658;
+    background: #1f4568; /* destaque ligeramente más vivo */
     color: #fff;
 }
 
