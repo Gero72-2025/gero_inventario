@@ -12,7 +12,7 @@
         <div class="card-body">
             <form action="<?= base_url('empleados/actualizar/' . $empleado['id']) ?>" method="post">
                 <?= csrf_field() ?>
-                <?= view('empleados/_form', ['submitLabel' => 'Actualizar', 'divisiones' => $divisiones, 'empleado' => $empleado]) ?>
+                <?= view('empleados/_form', ['submitLabel' => 'Actualizar', 'divisiones' => $divisiones, 'empleado' => $empleado, 'usuarios' => $usuarios]) ?>
             </form>
         </div>
     </div>

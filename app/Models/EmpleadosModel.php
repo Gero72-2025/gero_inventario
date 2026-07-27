@@ -18,6 +18,15 @@ class EmpleadosModel extends Model
         'tipo_contrato',
         'id_division',
         'status',
+        // new contact/identity fields
+        'nit',
+        'dpi',
+        'numero_telefonico',
+        'correo_electronico',
+        // optional fields
+        'es_jefe',
+        'id_usuario_asignado',
+        
         'id_usuario_creo',
         'id_usuario_actualizo',
         'id_usuario_elimino',

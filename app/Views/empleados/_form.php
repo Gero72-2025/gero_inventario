@@ -59,11 +59,64 @@ $errors = session('errors') ?? [];
     <select id="id_division" name="id_division" class="form-select" required>
         <option value="">-- Seleccionar división --</option>
         <?php foreach ($divisiones as $division): ?>
-            <option value="<?= esc($division['id']) ?>" <?= (old('id_division', $empleado['id_division'] ?? '') == $division['id']) ? 'selected' : '' ?>>
+            <option value="<?= esc($division['id']) ?>" <?= (old('id_division', $empleado['id_division'] ?? '') == $division['id']) ? 'selected' : '' ?> >
                 <?= esc($division['nombre_division']) ?>
             </option>
         <?php endforeach; ?>
     </select>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="nit" class="form-label">NIT</label>
+        <input type="text" id="nit" name="nit" class="form-control" maxlength="50"
+            value="<?= esc(old('nit', $empleado['nit'] ?? '')) ?>">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label for="dpi" class="form-label">DPI</label>
+        <input type="text" id="dpi" name="dpi" class="form-control" maxlength="50"
+            value="<?= esc(old('dpi', $empleado['dpi'] ?? '')) ?>">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="numero_telefonico" class="form-label">Número telefónico</label>
+        <input type="text" id="numero_telefonico" name="numero_telefonico" class="form-control" maxlength="25"
+            value="<?= esc(old('numero_telefonico', $empleado['numero_telefonico'] ?? '')) ?>">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label for="correo_electronico" class="form-label">Correo electrónico</label>
+        <input type="email" id="correo_electronico" name="correo_electronico" class="form-control" maxlength="150"
+            value="<?= esc(old('correo_electronico', $empleado['correo_electronico'] ?? '')) ?>">
+    </div>
+</div>
+
+<div class="row align-items-center mb-3">
+    <div class="col-auto">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="es_jefe" name="es_jefe" value="1"
+                <?= (old('es_jefe', isset($empleado['es_jefe']) ? $empleado['es_jefe'] : '') == 1) ? 'checked' : '' ?> >
+            <label class="form-check-label" for="es_jefe">Usuario jefe</label>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <label for="id_usuario_asignado" class="form-label">Asignar usuario</label>
+        <select id="id_usuario_asignado" name="id_usuario_asignado" class="form-select">
+            <option value="">-- Ninguno --</option>
+            <?php if (! empty($usuarios)): ?>
+                <?php foreach ($usuarios as $usuario): ?>
+                    <?php $label = esc($usuario['alias'] ?? $usuario['email'] ?? 'Usuario') ?>
+                    <option value="<?= esc($usuario['id']) ?>" <?= (old('id_usuario_asignado', $empleado['id_usuario_asignado'] ?? '') == $usuario['id']) ? 'selected' : '' ?>>
+                        <?= $label ?>
+                    </option>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </select>
+    </div>
 </div>
 
 <div class="mb-3">
