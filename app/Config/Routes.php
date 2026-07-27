@@ -208,6 +208,22 @@ $routes->post('solicitudes-encabezado/actualizar/(:num)', 'SolicitudesEncabezado
 $routes->post('solicitudes-encabezado/eliminar/(:num)', 'SolicitudesEncabezado::delete/$1');
 $routes->get('solicitudes-encabezado/descargar-pdf/(:num)', 'SolicitudesEncabezado::descargarPdf/$1');
 
+// Rutas para solicitudes_detalle
+$routes->get('solicitudes-detalle', 'SolicitudesDetalle::index');
+$routes->get('solicitudes-detalle/nuevo', 'SolicitudesDetalle::create');
+$routes->post('solicitudes-detalle', 'SolicitudesDetalle::store');
+$routes->get('solicitudes-detalle/editar/(:num)', 'SolicitudesDetalle::edit/$1');
+$routes->post('solicitudes-detalle/actualizar/(:num)', 'SolicitudesDetalle::update/$1');
+$routes->post('solicitudes-detalle/eliminar/(:num)', 'SolicitudesDetalle::delete/$1');
+
+// Rutas alternativas sin guiones
+$routes->get('solicitudesdetalle', 'SolicitudesDetalle::index');
+$routes->get('solicitudesdetalle/nuevo', 'SolicitudesDetalle::create');
+$routes->post('solicitudesdetalle', 'SolicitudesDetalle::store');
+$routes->get('solicitudesdetalle/editar/(:num)', 'SolicitudesDetalle::edit/$1');
+$routes->post('solicitudesdetalle/actualizar/(:num)', 'SolicitudesDetalle::update/$1');
+$routes->post('solicitudesdetalle/eliminar/(:num)', 'SolicitudesDetalle::delete/$1');
+
 $routes->get('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::index');
 $routes->get('solicitudes-historial-etapas/nuevo', 'SolicitudesHistorialEtapas::create');
 $routes->post('solicitudes-historial-etapas', 'SolicitudesHistorialEtapas::store');
