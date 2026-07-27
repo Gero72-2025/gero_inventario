@@ -67,6 +67,26 @@ $routes->post('renglones/actualizar/(:num)', 'Renglones::actualizar/$1');
 $routes->post('renglones/eliminar/(:num)', 'Renglones::delete/$1');
 $routes->get('renglones/getById/(:num)', 'Renglones::getById/$1');
 
+// Catálogo de Insumos
+$routes->get('cat_insumos', 'CatInsumos::index');
+$routes->get('cat_insumos/nuevo', 'CatInsumos::create');
+$routes->post('cat_insumos', 'CatInsumos::store');
+$routes->get('cat_insumos/ver/(:num)', 'CatInsumos::ver/$1');
+$routes->get('cat_insumos/editar/(:num)', 'CatInsumos::editar/$1');
+$routes->post('cat_insumos/actualizar/(:num)', 'CatInsumos::actualizar/$1');
+$routes->post('cat_insumos/eliminar/(:num)', 'CatInsumos::delete/$1');
+$routes->get('cat_insumos/getById/(:num)', 'CatInsumos::getById/$1');
+
+// Rutas alternativas sin guiones/underscore
+$routes->get('catinsumos', 'CatInsumos::index');
+$routes->get('catinsumos/nuevo', 'CatInsumos::create');
+$routes->post('catinsumos', 'CatInsumos::store');
+$routes->get('catinsumos/ver/(:num)', 'CatInsumos::ver/$1');
+$routes->get('catinsumos/editar/(:num)', 'CatInsumos::editar/$1');
+$routes->post('catinsumos/actualizar/(:num)', 'CatInsumos::actualizar/$1');
+$routes->post('catinsumos/eliminar/(:num)', 'CatInsumos::delete/$1');
+$routes->get('catinsumos/getById/(:num)', 'CatInsumos::getById/$1');
+
 $routes->get('divisiones', 'Divisiones::index');
 $routes->get('divisiones/nuevo', 'Divisiones::create');
 $routes->post('divisiones/guardar', 'Divisiones::store');
