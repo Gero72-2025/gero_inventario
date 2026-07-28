@@ -92,6 +92,8 @@ class Empleados extends BaseController
             'numero_telefonico' => 'permit_empty|max_length[25]',
             'nit'               => 'permit_empty|max_length[50]',
             'dpi'               => 'permit_empty|max_length[50]',
+            'fecha_nacimiento'  => 'permit_empty|valid_date',
+            'direccion'         => 'permit_empty|max_length[250]',
             'es_jefe'           => 'permit_empty',
             'id_usuario_asignado'=> 'permit_empty|integer',
         ];
@@ -169,6 +171,8 @@ class Empleados extends BaseController
                 'numero_telefonico' => 'permit_empty|max_length[25]',
                 'nit'               => 'permit_empty|max_length[50]',
                 'dpi'               => 'permit_empty|max_length[50]',
+                'fecha_nacimiento'  => 'permit_empty|valid_date',
+                'direccion'         => 'permit_empty|max_length[250]',
                 'es_jefe'           => 'permit_empty',
                 'id_usuario_asignado'=> 'permit_empty|integer',
             ];
@@ -237,6 +241,10 @@ class Empleados extends BaseController
         $idUsuarioAsignado = $this->request->getPost('id_usuario_asignado');
         $idUsuarioAsignado = is_numeric($idUsuarioAsignado) ? (int) $idUsuarioAsignado : null;
 
+        $fechaNacimiento = trim((string) $this->request->getPost('fecha_nacimiento')) ?: null;
+        // optional: normalize empty string to null
+        $direccion = trim((string) $this->request->getPost('direccion')) ?: null;
+
         return [
             'codigo_empleado'       => trim((string) $this->request->getPost('codigo_empleado')),
             'nombre_completo'       => trim((string) $this->request->getPost('nombre_completo')),
@@ -248,6 +256,8 @@ class Empleados extends BaseController
             'dpi'                   => trim((string) $this->request->getPost('dpi')) ?: null,
             'numero_telefonico'     => trim((string) $this->request->getPost('numero_telefonico')) ?: null,
             'correo_electronico'    => trim((string) $this->request->getPost('correo_electronico')) ?: null,
+            'fecha_nacimiento'      => $fechaNacimiento,
+            'direccion'             => $direccion,
             'es_jefe'               => $esJefe,
             'id_usuario_asignado'   => $idUsuarioAsignado,
 

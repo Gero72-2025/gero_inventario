@@ -23,6 +23,9 @@ class EmpleadosModel extends Model
         'dpi',
         'numero_telefonico',
         'correo_electronico',
+        // personal fields
+        'fecha_nacimiento',
+        'direccion',
         // optional fields
         'es_jefe',
         'id_usuario_asignado',

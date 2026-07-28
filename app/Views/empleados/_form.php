@@ -94,6 +94,20 @@ $errors = session('errors') ?? [];
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" class="form-control"
+            value="<?= esc(old('fecha_nacimiento', $empleado['fecha_nacimiento'] ?? '')) ?>">
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <label for="direccion" class="form-label">Dirección</label>
+        <input type="text" id="direccion" name="direccion" class="form-control" maxlength="250"
+            value="<?= esc(old('direccion', $empleado['direccion'] ?? '')) ?>">
+    </div>
+</div>
+
 <div class="row align-items-center mb-3">
     <div class="col-auto">
         <div class="form-check">
