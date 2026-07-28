@@ -14,10 +14,18 @@ class ContratosEmpleadosModel extends Model
     protected $protectFields    = true;
     protected $allowedFields    = [
         'numero_contrato',
+        'expediente',
+        'codigo_contrato',
+        'fecha_aceptacion_contrato',
         'fecha_inicio',
         'fecha_fin',
         'monto_contrato',
+        'monto_texto',
+        'cantidad_pagos',
         'estado_contrato',
+        'puente_financiamiento',
+        'renglon',
+        'codigo_renglon',
         'pdf_contrato_path',
         'status',
         'id_empleado',

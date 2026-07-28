@@ -38,10 +38,13 @@
                 <tr>
                     <th>ID</th>
                     <th>Número de contrato</th>
+                    <th>Código</th>
                     <th>Empleado</th>
+                    <th>Renglón</th>
                     <th>Fecha inicio</th>
                     <th>Fecha fin</th>
                     <th>Monto</th>
+                    <th>Honorarios</th>
                     <th>Estado</th>
                     <th>Estado contrato</th>
                     <th>Actualizado</th>
@@ -58,13 +61,21 @@
                         <tr>
                             <td><?= esc($contrato['id']) ?></td>
                             <td><?= esc($contrato['numero_contrato']) ?></td>
+                            <td><?= esc($contrato['codigo_contrato'] ?? '') ?></td>
                             <td><?= esc($contrato['nombre_completo'] ?? 'N/A') ?></td>
+                            <td><?= esc($contrato['codigo_renglon'] ?? 'N/A') ?></td>
                             <td><?= esc($contrato['fecha_inicio']) ?></td>
                             <td><?= esc($contrato['fecha_fin']) ?></td>
                             <td>
                                 <?php
                                     $monto = (float) $contrato['monto_contrato'];
                                     echo esc('Q ' . number_format($monto, 2, '.', ','));
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                    $pagos = isset($contrato['cantidad_pagos']) ? (int) $contrato['cantidad_pagos'] : 0;
+                                    echo esc('Q ' . number_format(($pagos > 0 ? ((float) $contrato['monto_contrato'] / $pagos) : 0), 2, '.', ','));
                                 ?>
                             </td>
                             <td>

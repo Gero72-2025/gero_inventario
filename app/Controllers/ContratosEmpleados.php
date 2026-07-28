@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ContratosEmpleadosModel;
 use App\Models\EmpleadosModel;
+use App\Models\RenglonesModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use RuntimeException;
 use Throwable;
@@ -12,6 +13,7 @@ class ContratosEmpleados extends BaseController
 {
     protected ContratosEmpleadosModel $contratosModel;
     protected EmpleadosModel $empleadosModel;
+    protected RenglonesModel $renglonesModel;
 
     private string $uploadPath = WRITEPATH . 'uploads/contratos/';
 
@@ -19,6 +21,7 @@ class ContratosEmpleados extends BaseController
     {
         $this->contratosModel = new ContratosEmpleadosModel();
         $this->empleadosModel = new EmpleadosModel();
+        $this->renglonesModel = new RenglonesModel();
 
         // Crear directorio de subida si no existe
         if (! is_dir($this->uploadPath)) {
@@ -39,6 +42,9 @@ class ContratosEmpleados extends BaseController
             $builder->groupStart()
                 ->like('contratos_empleados.numero_contrato', $searchTerm)
                 ->orLike('cat_empleados.nombre_completo', $searchTerm)
+                ->orLike('contratos_empleados.codigo_contrato', $searchTerm)
+                ->orLike('contratos_empleados.expediente', $searchTerm)
+                ->orLike('contratos_empleados.codigo_renglon', $searchTerm)
                 ->groupEnd();
         }
 
@@ -61,24 +67,38 @@ class ContratosEmpleados extends BaseController
             ->orderBy('nombre_completo', 'ASC')
             ->findAll();
 
+        $renglones = $this->renglonesModel
+            ->where('status', 'activo')
+            ->where('deleted_at', null)
+            ->orderBy('codigo_renglon', 'ASC')
+            ->findAll();
+
         return view('contratos-empleados/create', [
-            'empleados' => $empleados,
+            'empleados'  => $empleados,
+            'renglones'  => $renglones,
         ]);
     }
 
     public function store()
     {
         $rules = [
-            'numero_contrato'   => 'required|max_length[100]|is_unique[contratos_empleados.numero_contrato]',
-            'fecha_inicio'      => 'required|valid_date',
-            'fecha_fin'         => 'required|valid_date',
-            'monto_contrato'    => 'required|decimal',
-            'estado_contrato'   => 'required|in_list[vigente,vencido,rescindido]',
-            'id_empleado'       => 'required|integer|is_not_unique[cat_empleados.id]',
-            'status'            => 'permit_empty|in_list[activo,inactivo]',
-            'pdf_contrato'      => 'uploaded[pdf_contrato]|mime_in[pdf_contrato,application/pdf]|max_size[pdf_contrato,5120]',
+            'numero_contrato'             => 'required|max_length[100]|is_unique[contratos_empleados.numero_contrato]',
+            'expediente'                  => 'permit_empty|max_length[100]',
+            'codigo_contrato'             => 'required|max_length[100]',
+            'fecha_aceptacion_contrato'   => 'required|valid_date',
+            'fecha_inicio'                => 'required|valid_date',
+            'fecha_fin'                   => 'required|valid_date',
+            'monto_contrato'              => 'required|decimal',
+            'monto_texto'                 => 'permit_empty|max_length[255]',
+            'cantidad_pagos'              => 'required|integer|greater_than[0]',
+            'estado_contrato'             => 'required|in_list[vigente,vencido,rescindido]',
+            'puente_financiamiento'       => 'permit_empty|max_length[255]',
+            'renglon'                     => 'required|integer|is_not_unique[renglones.id]',
+            'codigo_renglon'              => 'permit_empty|max_length[100]',
+            'id_empleado'                 => 'required|integer|is_not_unique[cat_empleados.id]',
+            'status'                      => 'permit_empty|in_list[activo,inactivo]',
+            'pdf_contrato'                => 'uploaded[pdf_contrato]|mime_in[pdf_contrato,application/pdf]|max_size[pdf_contrato,5120]',
         ];
-
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
@@ -120,9 +140,16 @@ class ContratosEmpleados extends BaseController
             ->orderBy('nombre_completo', 'ASC')
             ->findAll();
 
+        $renglones = $this->renglonesModel
+            ->where('status', 'activo')
+            ->where('deleted_at', null)
+            ->orderBy('codigo_renglon', 'ASC')
+            ->findAll();
+
         return view('contratos-empleados/edit', [
             'contrato'  => $contrato,
             'empleados' => $empleados,
+            'renglones' => $renglones,
         ]);
     }
 
@@ -136,14 +163,22 @@ class ContratosEmpleados extends BaseController
             }
 
             $rules = [
-                'numero_contrato'   => 'required|max_length[100]|is_unique[contratos_empleados.numero_contrato,id,' . $id . ']',
-                'fecha_inicio'      => 'required|valid_date',
-                'fecha_fin'         => 'required|valid_date',
-                'monto_contrato'    => 'required|decimal',
-                'estado_contrato'   => 'required|in_list[vigente,vencido,rescindido]',
-                'id_empleado'       => 'required|integer|is_not_unique[cat_empleados.id]',
-                'status'            => 'permit_empty|in_list[activo,inactivo]',
-                'pdf_contrato'      => 'permit_empty|uploaded[pdf_contrato]|mime_in[pdf_contrato,application/pdf]|max_size[pdf_contrato,5120]',
+                'numero_contrato'             => 'required|max_length[100]|is_unique[contratos_empleados.numero_contrato,id,' . $id . ']',
+                'expediente'                  => 'permit_empty|max_length[100]',
+                'codigo_contrato'             => 'required|max_length[100]',
+                'fecha_aceptacion_contrato'   => 'required|valid_date',
+                'fecha_inicio'                => 'required|valid_date',
+                'fecha_fin'                   => 'required|valid_date',
+                'monto_contrato'              => 'required|decimal',
+                'monto_texto'                 => 'permit_empty|max_length[255]',
+                'cantidad_pagos'              => 'required|integer|greater_than[0]',
+                'estado_contrato'             => 'required|in_list[vigente,vencido,rescindido]',
+                'puente_financiamiento'       => 'permit_empty|max_length[255]',
+                'renglon'                     => 'required|integer|is_not_unique[renglones.id]',
+                'codigo_renglon'              => 'permit_empty|max_length[100]',
+                'id_empleado'                 => 'required|integer|is_not_unique[cat_empleados.id]',
+                'status'                      => 'permit_empty|in_list[activo,inactivo]',
+                'pdf_contrato'                => 'permit_empty|uploaded[pdf_contrato]|mime_in[pdf_contrato,application/pdf]|max_size[pdf_contrato,5120]',
             ];
 
             if (! $this->validate($rules)) {
@@ -255,15 +290,23 @@ class ContratosEmpleados extends BaseController
         $idUsuario = $idUsuario > 0 ? $idUsuario : null;
 
         return [
-            'numero_contrato'      => trim((string) $this->request->getPost('numero_contrato')),
-            'fecha_inicio'         => $this->request->getPost('fecha_inicio'),
-            'fecha_fin'            => $this->request->getPost('fecha_fin'),
-            'monto_contrato'       => (float) str_replace(',', '.', $this->request->getPost('monto_contrato')),
-            'estado_contrato'      => $this->request->getPost('estado_contrato'),
-            'id_empleado'          => (int) $this->request->getPost('id_empleado'),
-            'status'               => $this->request->getPost('status') ?? 'activo',
-            'id_usuario_creo'      => $idUsuario,
-            'id_usuario_actualizo' => $idUsuario,
+            'numero_contrato'            => trim((string) $this->request->getPost('numero_contrato')),
+            'expediente'                 => trim((string) $this->request->getPost('expediente')),
+            'codigo_contrato'            => trim((string) $this->request->getPost('codigo_contrato')),
+            'fecha_aceptacion_contrato'  => $this->request->getPost('fecha_aceptacion_contrato'),
+            'fecha_inicio'               => $this->request->getPost('fecha_inicio'),
+            'fecha_fin'                  => $this->request->getPost('fecha_fin'),
+            'monto_contrato'             => (float) str_replace(',', '.', $this->request->getPost('monto_contrato')),
+            'monto_texto'                => trim((string) $this->request->getPost('monto_texto')),
+            'cantidad_pagos'             => (int) $this->request->getPost('cantidad_pagos'),
+            'estado_contrato'            => $this->request->getPost('estado_contrato'),
+            'puente_financiamiento'      => trim((string) $this->request->getPost('puente_financiamiento')),
+            'renglon'                    => (int) $this->request->getPost('renglon'),
+            'codigo_renglon'             => trim((string) $this->request->getPost('codigo_renglon')),
+            'id_empleado'                => (int) $this->request->getPost('id_empleado'),
+            'status'                     => $this->request->getPost('status') ?? 'activo',
+            'id_usuario_creo'            => $idUsuario,
+            'id_usuario_actualizo'       => $idUsuario,
         ];
     }
 }
