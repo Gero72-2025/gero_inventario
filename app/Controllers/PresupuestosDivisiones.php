@@ -139,6 +139,11 @@ class PresupuestosDivisiones extends BaseController
                 throw new RuntimeException('No fue posible insertar el presupuesto de división.');
             }
 
+            $idUsuario = (int) (session('user_id') ?? 0);
+            $idUsuario = $idUsuario > 0 ? $idUsuario : null;
+            $idPresupuestoCreado = (int) $this->presupuestosDivisionModel->insertID();
+            $this->presupuestosDivisionModel->recalcularSaldosPorGrupo($idPresupuestoCreado, $idUsuario);
+
             return redirect()->to(base_url('presupuestos-divisiones'))
                 ->with('success', 'Presupuesto de división creado correctamente.');
         } catch (Throwable $e) {
@@ -217,6 +222,9 @@ class PresupuestosDivisiones extends BaseController
                 throw PageNotFoundException::forPageNotFound('El presupuesto de división no existe.');
             }
 
+            $idEjercicioAnterior = (int) $presupuestoDivision['id_ejercicio'];
+            $idDivisionAnterior = (int) $presupuestoDivision['id_division'];
+
             $rules = [
                 'id_ejercicio'   => 'required|integer|greater_than[0]',
                 'id_division'    => 'required|integer|greater_than[0]',
@@ -230,6 +238,7 @@ class PresupuestosDivisiones extends BaseController
 
             $montoAsignado = (float) $this->request->getPost('monto_asignado');
             $idEjercicio = (int) $this->request->getPost('id_ejercicio');
+            $idDivision = (int) $this->request->getPost('id_division');
 
             $ejercicio = $this->ejerciciosFiscalesModel->find($idEjercicio);
             if (! $ejercicio) {
@@ -271,6 +280,15 @@ class PresupuestosDivisiones extends BaseController
                 throw new RuntimeException('No fue posible actualizar el presupuesto de división.');
             }
 
+            $idUsuario = (int) (session('user_id') ?? 0);
+            $idUsuario = $idUsuario > 0 ? $idUsuario : null;
+
+            if ($idEjercicioAnterior !== $idEjercicio || $idDivisionAnterior !== $idDivision) {
+                $this->presupuestosDivisionModel->recalcularGrupo($idEjercicioAnterior, $idDivisionAnterior, $idUsuario);
+            }
+
+            $this->presupuestosDivisionModel->recalcularGrupo($idEjercicio, $idDivision, $idUsuario);
+
             return redirect()->to(base_url('presupuestos-divisiones'))
                 ->with('success', 'Presupuesto de división actualizado correctamente.');
         } catch (Throwable $e) {
@@ -299,6 +317,7 @@ class PresupuestosDivisiones extends BaseController
                 'id_usuario_elimino' => $idUsuario,
             ]);
             $this->presupuestosDivisionModel->delete($id);
+            $this->presupuestosDivisionModel->recalcularGrupo((int) $presupuestoDivision['id_ejercicio'], (int) $presupuestoDivision['id_division'], $idUsuario);
 
             return redirect()->to(base_url('presupuestos-divisiones'))
                 ->with('success', 'Presupuesto de división eliminado correctamente.');

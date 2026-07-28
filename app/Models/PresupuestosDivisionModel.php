@@ -56,4 +56,54 @@ class PresupuestosDivisionModel extends Model
 
         return $this->orderBy('presupuestos_division.id', 'DESC')->paginate(10);
     }
+
+    public function recalcularSaldosPorGrupo(int $idPresupuestoDivision, ?int $idUsuario = null): void
+    {
+        $presupuesto = $this->find($idPresupuestoDivision);
+
+        if (! $presupuesto) {
+            return;
+        }
+
+        $this->recalcularGrupo((int) $presupuesto['id_ejercicio'], (int) $presupuesto['id_division'], $idUsuario);
+    }
+
+    public function recalcularGrupo(int $idEjercicio, int $idDivision, ?int $idUsuario = null): void
+    {
+        $presupuestos = $this->where('id_ejercicio', $idEjercicio)
+            ->where('id_division', $idDivision)
+            ->where('deleted_at', null)
+            ->findAll();
+
+        if (empty($presupuestos)) {
+            return;
+        }
+
+        $db = db_connect();
+        $saldoBasePorPresupuesto = [];
+
+        foreach ($presupuestos as $presupuesto) {
+            $asignadoEnRenglones = (float) $db->table('presupuesto_renglones')
+                ->selectSum('monto_asignado')
+                ->where('id_presupuesto_division', $presupuesto['id'])
+                ->where('deleted_at', null)
+                ->get()
+                ->getRow()
+                ->monto_asignado ?? 0;
+
+            $saldoBasePorPresupuesto[(int) $presupuesto['id']] = (float) $presupuesto['monto_asignado'] - $asignadoEnRenglones;
+        }
+
+        $saldoGrupo = array_sum($saldoBasePorPresupuesto);
+
+        foreach ($presupuestos as $presupuesto) {
+            $data = ['saldo_actual' => $saldoGrupo];
+
+            if ($idUsuario !== null) {
+                $data['id_usuario_actualizo'] = $idUsuario;
+            }
+
+            $this->update((int) $presupuesto['id'], $data);
+        }
+    }
 }

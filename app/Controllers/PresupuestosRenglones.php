@@ -147,11 +147,7 @@ class PresupuestosRenglones extends Controller
                 return redirect()->back()->withInput();
             }
 
-            $nuevoSaldoPresupuesto = (float)$presupuesto['saldo_actual'] - $montoAsignado;
-            $this->presupuestosDivisionModel->update($idPresupuesto, [
-                'saldo_actual' => $nuevoSaldoPresupuesto,
-                'id_usuario_actualizo' => $idUsuario,
-            ]);
+            $this->presupuestosDivisionModel->recalcularSaldosPorGrupo($idPresupuesto, $idUsuario);
 
             $this->session->setFlashdata('success', 'Presupuesto renglón creado exitosamente.');
             return redirect()->to('presupuestos-renglones');
@@ -304,31 +300,12 @@ class PresupuestosRenglones extends Controller
             }
 
             $idPresupuestoAnterior = (int) $presupuesto['id_presupuesto_division'];
-            $montoAnteriorRenglon = (float) $presupuesto['monto_asignado'];
 
             if ($idPresupuestoAnterior !== $idPresupuesto) {
-                $pdAnterior = $this->presupuestosDivisionModel->find($idPresupuestoAnterior);
-                if ($pdAnterior) {
-                    $saldoRestaurado = (float)$pdAnterior['saldo_actual'] + $montoAnteriorRenglon;
-                    $this->presupuestosDivisionModel->update($idPresupuestoAnterior, [
-                        'saldo_actual' => $saldoRestaurado,
-                        'id_usuario_actualizo' => $idUsuario,
-                    ]);
-                }
-
-                $nuevoSaldoPresupuesto = (float)$pd['saldo_actual'] - $montoAsignado;
-                $this->presupuestosDivisionModel->update($idPresupuesto, [
-                    'saldo_actual' => $nuevoSaldoPresupuesto,
-                    'id_usuario_actualizo' => $idUsuario,
-                ]);
-            } else {
-                $diferenciaMonto = $montoAsignado - $montoAnteriorRenglon;
-                $nuevoSaldoPresupuesto = (float)$pd['saldo_actual'] - $diferenciaMonto;
-                $this->presupuestosDivisionModel->update($idPresupuesto, [
-                    'saldo_actual' => $nuevoSaldoPresupuesto,
-                    'id_usuario_actualizo' => $idUsuario,
-                ]);
+                $this->presupuestosDivisionModel->recalcularSaldosPorGrupo($idPresupuestoAnterior, $idUsuario);
             }
+
+            $this->presupuestosDivisionModel->recalcularSaldosPorGrupo($idPresupuesto, $idUsuario);
 
             $this->session->setFlashdata('success', 'Presupuesto renglón actualizado exitosamente.');
             return redirect()->to('presupuestos-renglones');
@@ -373,11 +350,7 @@ class PresupuestosRenglones extends Controller
 
             $presupuestoDivision = $this->presupuestosDivisionModel->find($idPresupuesto);
             if ($presupuestoDivision) {
-                $saldoRestaurado = (float)$presupuestoDivision['saldo_actual'] + $montoAsignado;
-                $this->presupuestosDivisionModel->update($idPresupuesto, [
-                    'saldo_actual' => $saldoRestaurado,
-                    'id_usuario_actualizo' => $idUsuario,
-                ]);
+                $this->presupuestosDivisionModel->recalcularSaldosPorGrupo($idPresupuesto, $idUsuario);
             }
 
             if ($this->request->isAJAX()) {
