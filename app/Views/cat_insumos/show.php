@@ -16,8 +16,17 @@
                 <dt class="col-sm-3">Renglón</dt>
                 <dd class="col-sm-9"><?= esc($insumo['renglon_codigo']) ?> - <?= esc($insumo['renglon_descripcion']) ?></dd>
 
-                <dt class="col-sm-3">Precio Sugerido</dt>
-                <dd class="col-sm-9"><?= number_format((float)$insumo['precio_sugerido'], 2) ?></dd>
+                <dt class="col-sm-3">Precio Unitario PACC (SIN IVA)</dt>
+                <dd class="col-sm-9"><?= number_format((float)$insumo['precio_unitario_pacc'], 2) ?></dd>
+
+                <dt class="col-sm-3">Presentación</dt>
+                <dd class="col-sm-9"><?= esc($insumo['presentacion']) ?></dd>
+
+                <dt class="col-sm-3">Unidad de medida</dt>
+                <dd class="col-sm-9"><?= esc($insumo['unidad_medida']) ?></dd>
+
+                <dt class="col-sm-3">Características</dt>
+                <dd class="col-sm-9"><?= nl2br(esc($insumo['caracteristicas'])) ?></dd>
 
                 <dt class="col-sm-3">Tipo</dt>
                 <dd class="col-sm-9"><?= esc($insumo['tipo_insumo']) ?></dd>

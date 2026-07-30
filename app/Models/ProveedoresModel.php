@@ -16,6 +16,7 @@ class ProveedoresModel extends Model
         'nit_proveedor',
         'nombre_legal',
         'nombre_comercial',
+        'nombre_contacto',
         'direccion_fiscal',
         'telefono_contacto',
         'email_contacto',

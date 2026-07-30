@@ -39,7 +39,7 @@
                     <th>Código PACC</th>
                     <th>Nombre</th>
                     <th>Renglón</th>
-                    <th>Precio Sugerido</th>
+                    <th>Precio Unitario PACC<br><small class="text-muted">SIN IVA</small></th>
                     <th>Tipo</th>
                     <th>Cuenta SAP</th>
                     <th>Estado</th>
@@ -57,7 +57,7 @@
                             <td><strong><?= esc($insumo['codigo_pacc']) ?></strong></td>
                             <td><?= esc($insumo['nombre_insumo']) ?></td>
                             <td><?= esc($insumo['renglon_codigo'] ?? '') ?> - <?= esc(substr($insumo['renglon_descripcion'] ?? '', 0, 40)) ?></td>
-                            <td><?= number_format((float) $insumo['precio_sugerido'], 2) ?></td>
+                            <td><?= number_format((float) $insumo['precio_unitario_pacc'], 2) ?></td>
                             <td><?= ucfirst($insumo['tipo_insumo']) ?></td>
                             <td><?= esc($insumo['cuenta_sap']) ?></td>
                             <td>

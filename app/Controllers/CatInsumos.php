@@ -73,13 +73,16 @@ class CatInsumos extends Controller
 
         try {
             $validation = $this->validate([
-                'id_renglon'      => 'required|integer',
-                'codigo_pacc'     => 'required|max_length[100]|is_unique[cat_insumos.codigo_pacc]',
-                'nombre_insumo'   => 'required|max_length[255]',
-                'precio_sugerido' => 'required|decimal',
-                'tipo_insumo'     => 'required|in_list[activo,material]',
-                'cuenta_sap'      => 'permit_empty|max_length[100]',
-                'status'          => 'required|in_list[activo,anulado]',
+                'id_renglon'             => 'required|integer',
+                'codigo_pacc'            => 'required|max_length[100]|is_unique[cat_insumos.codigo_pacc]',
+                'nombre_insumo'          => 'required|max_length[255]',
+                'precio_unitario_pacc'   => 'required|decimal',
+                'caracteristicas'        => 'permit_empty|max_length[2000]',
+                'presentacion'           => 'permit_empty|max_length[255]',
+                'unidad_medida'          => 'permit_empty|max_length[255]',
+                'tipo_insumo'            => 'required|in_list[activo,material]',
+                'cuenta_sap'             => 'permit_empty|max_length[100]',
+                'status'                 => 'required|in_list[activo,anulado]',
             ]);
 
             if (! $validation) {
@@ -89,14 +92,17 @@ class CatInsumos extends Controller
             $idUsuario = session('user_id');
 
             $data = [
-                'id_renglon'         => $this->request->getPost('id_renglon'),
-                'codigo_pacc'        => $this->request->getPost('codigo_pacc'),
-                'nombre_insumo'      => $this->request->getPost('nombre_insumo'),
-                'precio_sugerido'    => $this->request->getPost('precio_sugerido'),
-                'tipo_insumo'        => $this->request->getPost('tipo_insumo'),
-                'cuenta_sap'         => $this->request->getPost('cuenta_sap'),
-                'status'             => $this->request->getPost('status') ?? 'activo',
-                'id_usuario_creo'    => $idUsuario,
+                'id_renglon'             => $this->request->getPost('id_renglon'),
+                'codigo_pacc'            => $this->request->getPost('codigo_pacc'),
+                'nombre_insumo'          => $this->request->getPost('nombre_insumo'),
+                'precio_unitario_pacc'   => $this->request->getPost('precio_unitario_pacc'),
+                'caracteristicas'        => $this->request->getPost('caracteristicas'),
+                'presentacion'           => $this->request->getPost('presentacion'),
+                'unidad_medida'          => $this->request->getPost('unidad_medida'),
+                'tipo_insumo'            => $this->request->getPost('tipo_insumo'),
+                'cuenta_sap'             => $this->request->getPost('cuenta_sap'),
+                'status'                 => $this->request->getPost('status') ?? 'activo',
+                'id_usuario_creo'        => $idUsuario,
             ];
 
             $inserted = $this->insumosModel->insert($data);
@@ -184,13 +190,16 @@ class CatInsumos extends Controller
             }
 
             $validation = $this->validate([
-                'id_renglon'      => 'required|integer',
-                'codigo_pacc'     => 'required|max_length[100]|is_unique[cat_insumos.codigo_pacc,id,' . $id . ']',
-                'nombre_insumo'   => 'required|max_length[255]',
-                'precio_sugerido' => 'required|decimal',
-                'tipo_insumo'     => 'required|in_list[activo,material]',
-                'cuenta_sap'      => 'permit_empty|max_length[100]',
-                'status'          => 'required|in_list[activo,anulado]',
+                'id_renglon'             => 'required|integer',
+                'codigo_pacc'            => 'required|max_length[100]|is_unique[cat_insumos.codigo_pacc,id,' . $id . ']',
+                'nombre_insumo'          => 'required|max_length[255]',
+                'precio_unitario_pacc'   => 'required|decimal',
+                'caracteristicas'        => 'permit_empty|max_length[2000]',
+                'presentacion'           => 'permit_empty|max_length[255]',
+                'unidad_medida'          => 'permit_empty|max_length[255]',
+                'tipo_insumo'            => 'required|in_list[activo,material]',
+                'cuenta_sap'             => 'permit_empty|max_length[100]',
+                'status'                 => 'required|in_list[activo,anulado]',
             ]);
 
             if (! $validation) {
@@ -203,7 +212,10 @@ class CatInsumos extends Controller
                 'id_renglon'            => $this->request->getPost('id_renglon'),
                 'codigo_pacc'           => $this->request->getPost('codigo_pacc'),
                 'nombre_insumo'         => $this->request->getPost('nombre_insumo'),
-                'precio_sugerido'       => $this->request->getPost('precio_sugerido'),
+                'precio_unitario_pacc'  => $this->request->getPost('precio_unitario_pacc'),
+                'caracteristicas'       => $this->request->getPost('caracteristicas'),
+                'presentacion'          => $this->request->getPost('presentacion'),
+                'unidad_medida'         => $this->request->getPost('unidad_medida'),
                 'tipo_insumo'           => $this->request->getPost('tipo_insumo'),
                 'cuenta_sap'            => $this->request->getPost('cuenta_sap'),
                 'status'                => $this->request->getPost('status'),

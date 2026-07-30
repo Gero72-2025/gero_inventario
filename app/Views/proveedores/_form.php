@@ -52,6 +52,18 @@ $errors = session('errors') ?? [];
 </div>
 
 <div class="mb-3">
+    <label for="nombre_contacto" class="form-label">Nombre del Contacto</label>
+    <input
+        type="text"
+        id="nombre_contacto"
+        name="nombre_contacto"
+        class="form-control"
+        maxlength="255"
+        value="<?= esc(old('nombre_contacto', $proveedor['nombre_contacto'] ?? '')) ?>"
+    >
+</div>
+
+<div class="mb-3">
     <label for="direccion_fiscal" class="form-label">Dirección Fiscal <span class="text-danger">*</span></label>
     <textarea
         id="direccion_fiscal"

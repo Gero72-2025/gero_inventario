@@ -40,6 +40,7 @@
                     <th>NIT</th>
                     <th>Nombre Legal</th>
                     <th>Nombre Comercial</th>
+                    <th>Contacto</th>
                     <th>Teléfono</th>
                     <th>Email</th>
                     <th>Estado</th>
@@ -50,7 +51,7 @@
                 <tbody>
                 <?php if (empty($proveedores)): ?>
                     <tr>
-                        <td colspan="9" class="text-center py-4">No hay proveedores registrados.</td>
+                        <td colspan="10" class="text-center py-4">No hay proveedores registrados.</td>
                     </tr>
                 <?php else: ?>
                     <?php foreach ($proveedores as $proveedor): ?>
@@ -59,6 +60,7 @@
                             <td><strong><?= esc($proveedor['nit_proveedor']) ?></strong></td>
                             <td><?= esc($proveedor['nombre_legal']) ?></td>
                             <td><?= esc($proveedor['nombre_comercial']) ?></td>
+                            <td><?= esc($proveedor['nombre_contacto'] ?? '-') ?></td>
                             <td><?= esc($proveedor['telefono_contacto'] ?? '-') ?></td>
                             <td><?= esc($proveedor['email_contacto'] ?? '-') ?></td>
                             <td>

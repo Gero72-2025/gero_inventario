@@ -40,8 +40,23 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="precio_sugerido" class="form-label">Precio Sugerido</label>
-                    <input type="number" step="0.01" name="precio_sugerido" id="precio_sugerido" class="form-control" value="<?= set_value('precio_sugerido', '0.00') ?>" required>
+                    <label for="precio_unitario_pacc" class="form-label">Precio Unitario PACC (SIN IVA)</label>
+                    <input type="number" step="0.01" name="precio_unitario_pacc" id="precio_unitario_pacc" class="form-control" value="<?= set_value('precio_unitario_pacc', '0.00') ?>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="presentacion" class="form-label">Presentación</label>
+                    <input type="text" name="presentacion" id="presentacion" class="form-control" value="<?= set_value('presentacion') ?>" maxlength="255">
+                </div>
+
+                <div class="mb-3">
+                    <label for="unidad_medida" class="form-label">Unidad de Medida</label>
+                    <input type="text" name="unidad_medida" id="unidad_medida" class="form-control" value="<?= set_value('unidad_medida') ?>" maxlength="255">
+                </div>
+
+                <div class="mb-3">
+                    <label for="caracteristicas" class="form-label">Características</label>
+                    <textarea name="caracteristicas" id="caracteristicas" class="form-control" rows="4"><?= set_value('caracteristicas') ?></textarea>
                 </div>
 
                 <div class="mb-3">

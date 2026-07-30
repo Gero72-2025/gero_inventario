@@ -31,10 +31,25 @@ class CreateCatInsumos extends Migration
                 'constraint' => '255',
                 'null'       => false,
             ],
-            'precio_sugerido' => [
+            'precio_unitario_pacc' => [
                 'type'       => 'DECIMAL',
                 'constraint' => '15,2',
                 'default'    => '0.00',
+            ],
+            'caracteristicas' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '2000',
+                'null'       => true,
+            ],
+            'presentacion' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
+            ],
+            'unidad_medida' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
             ],
             'tipo_insumo' => [
                 'type'       => "ENUM('activo','material')",
